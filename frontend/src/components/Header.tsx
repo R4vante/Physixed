@@ -18,17 +18,17 @@ const Header = ({ className, ...props }: HeaderProps) => {
     <>
       <header
         className={twMerge(
-          "fixed mb-4 px-4 top-[1rem] z-[20] flex w-full flex-wrap items-center justify-between md:px-10 lg:px-15",
+          "mb-4 px-4 top-0 z-[20] flex flex-wrap items-center justify-between md:px-10 lg:px-15",
           className
         )}
         {...props}
       >
         <Logo />
-        <nav>
-          <div>
-            <ul className="flex">
+        <nav className="flex justify-end">
+          <div className="hidden md:flex w-full justify-between">
+            <ul>
               {links.map((link) => (
-                <li className="ml-4" key={link.path}>
+                <li key={link.path}>
                   <NavLinks href={link.path}>{link.title}</NavLinks>
                 </li>
               ))}

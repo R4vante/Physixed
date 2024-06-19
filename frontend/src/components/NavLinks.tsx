@@ -2,18 +2,11 @@ import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-const NavLinks = ({
-  children,
-  href,
-  onClick,
-  className,
-  ...props
-}: NavLinksProps) => {
+const NavLinks = ({ children, href, className, ...props }: NavLinksProps) => {
   return (
     <>
       <Link
         href={href}
-        onClick={onClick}
         {...props}
         className={twMerge("hover:text-white", className)}
       >
@@ -29,5 +22,4 @@ type NavLinksProps = {
   children: React.ReactNode;
   href: string;
   className?: string;
-  onClick?: () => void;
 };
