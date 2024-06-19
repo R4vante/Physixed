@@ -35,4 +35,5 @@ jobs:
       - name: Run Tests
         shell: bash -l {0}
         run: |
+          cd backend
           poetry run python -m pytest .
