@@ -1,25 +1,25 @@
+import Link from "next/link";
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-const NavLinks = ({ children, to, className, ...props }: NavLinksProps) => {
+const NavLinks = ({ children, href, className, ...props }: NavLinksProps) => {
   return (
     <>
-      <NavLink
-        to={to}
+      <Link
+        href={href}
         {...props}
         className={twMerge("hover:text-white", className)}
       >
         {children}
-      </NavLink>
+      </Link>
     </>
   );
 };
 
 export default NavLinks;
 
-interface NavLinksProps {
+type NavLinksProps = {
   children: React.ReactNode;
-  to: string;
+  href: string;
   className?: string;
-}
+};
