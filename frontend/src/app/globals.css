@@ -14,4 +14,8 @@
     #root {
         @apply flex flex-col min-h-screen;
     }
+
+    h1 {
+        @apply text-3xl sm:text-4xl font-bold;
+    }
 }
