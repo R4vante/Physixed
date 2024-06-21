@@ -42,7 +42,7 @@ const Header = ({ className, ...props }: HeaderProps) => {
         </nav>
 
         {isOpen && (
-          <div className="overflow-y-hidden flex flex-col items-center basis-full h-screen justify-center">
+          <div className="overflow-y-hidden flex flex-col items-center basis-full h-[90vh] justify-center">
             <ul className="h-full w-full text-center pt-12">
               {links.map((link) => (
                 <li className="text-xl py-6" key={link.path}>
