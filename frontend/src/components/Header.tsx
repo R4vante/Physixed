@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Logo from "@/components/Logo";
+import Logo from "@/components/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
-import NavLinks from "@/components/NavLinks";
+import NavLinks from "@/components/navLinks";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,10 +26,10 @@ const Header = ({ className, ...props }: HeaderProps) => {
         <Logo />
         <nav className="flex justify-end">
           <div className="hidden md:flex w-full justify-between">
-            <ul>
+            <ul className="flex justify-center gap-y-1 sm:gap-5">
               {links.map((link) => (
                 <li key={link.path}>
-                  <NavLinks href={link.path}>{link.title}</NavLinks>
+                  <NavLinks href={link.path}>{link.name}</NavLinks>
                 </li>
               ))}
             </ul>
