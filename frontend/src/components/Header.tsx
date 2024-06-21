@@ -34,7 +34,30 @@ const Header = ({ className, ...props }: HeaderProps) => {
               ))}
             </ul>
           </div>
+          <div>
+            <button className="md:hidden" onClick={toggleNavBar}>
+              {isOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
         </nav>
+
+        {isOpen && (
+          <div className="overflow-y-hidden flex flex-col items-center basis-full h-screen justify-center">
+            <ul className="h-full w-full text-center pt-12">
+              {links.map((link) => (
+                <li className="text-xl py-6" key={link.path}>
+                  <NavLinks
+                    onClick={toggleNavBar}
+                    key={link.path}
+                    href={link.path}
+                  >
+                    {link.name}
+                  </NavLinks>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </header>
     </>
   );
