@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+
 from __future__ import annotations
 
 from collections.abc import Sequence
@@ -72,6 +73,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "physixed.urls"
+
+# Corsheaders
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 TEMPLATES = [
     {
@@ -174,7 +180,7 @@ except ImportError as e:
     raise AssertionError(msg) from e
 
 try:
-    if bool(DEBUG) is True:
+    if bool(DEBUG):
         from .px_development_apps import development_apps
 except ImportError:
     msg = """
@@ -216,7 +222,7 @@ def update_applist_logging(
 for app_directory, appdict in baseline_apps.items():
     update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
 
-if bool(DEBUG) is True:
+if bool(DEBUG):
     # We are on development/debug mode
     for app_directory, appdict in development_apps.items():
         update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
