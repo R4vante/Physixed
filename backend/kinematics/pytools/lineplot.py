@@ -41,7 +41,8 @@ def make_plot(x_data: pint.Quantity, y_data: pint.Quantity) -> str:
     fig.update_layout(
         xaxis_title=f"{compact_unit_x:P}",
         yaxis_title=f"{compact_unit_y:P}",
-        paper_bgcolor="rgba(0,0,0,0)",
+        modebar={"orientation": "v"},
+        # paper_bgcolor="rgba(0,0,0,0)",
         margin={"l": 5, "r": 5, "t": 5, "b": 5},
         width=400,
         height=400,
