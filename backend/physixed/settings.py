@@ -52,6 +52,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS: list[str] = [
     # Third party apps
     #######################
+    "rest_framework",
+    "corsheaders",
 ]
 
 LOCAL_APPS: list[str] = []
@@ -66,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "physixed.urls"
