@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .pytools.lineplot import make_plot
+from .pytools.utils import FreeFall
 from .serializers import FreeFallSerializer
 
 
@@ -30,14 +32,13 @@ class FreeFallView(APIView):
             height_unit = serializer.validated_data["height_unit"]
             velocity = serializer.validated_data["velocity"]
             velocity_unit = serializer.validated_data["velocity_unit"]
+
+            ff_model = FreeFall(initial_height=(height, height_unit), initial_velocity=(velocity, velocity_unit))
+
+            results = ff_model.solve_eq()
+            plot_dict = make_plot(results["time"], results["height"])
             return Response(
-                {
-                    "message": "Success",
-                    "height": height,
-                    "height_unit": height_unit,
-                    "velocity": velocity,
-                    "velocity_unit": velocity_unit,
-                },
+                {"message": "Success", "plot_dict": plot_dict},
                 status=status.HTTP_200_OK,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

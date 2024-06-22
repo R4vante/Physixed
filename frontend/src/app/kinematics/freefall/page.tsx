@@ -1,5 +1,6 @@
 "use client";
 import Graph from "@/components/graph";
+import { GraphProps } from "@/lib/types";
 import React, { useState } from "react";
 
 const FreeFall = () => {
@@ -7,6 +8,7 @@ const FreeFall = () => {
   const [xUnit, setXUnit] = useState("m");
   const [yData, setYData] = useState("");
   const [yUnit, setYUnit] = useState("m/s");
+  const [plotData, setPlotData] = useState<GraphProps>();
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -27,12 +29,14 @@ const FreeFall = () => {
       }
     );
     const result = await response.json();
-    setMessage(result.height);
-    console.log(result);
+    setMessage(result.plot_dict);
+
+    setPlotData(JSON.parse(result.plot_dict));
+    console.log(plotData);
   };
 
   return (
-    <div>
+    <div className="w-full">
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="xData">X Data:</label>
@@ -66,12 +70,16 @@ const FreeFall = () => {
             onChange={(e) => setYUnit(e.target.value)}
           >
             <option value="m/s">m/s</option>
-            <option value="km/h">km/h</option>
+            <option value="km /h">km/h</option>
           </select>
         </div>
         <button type="submit">Submit</button>
       </form>
-      {message && <p>{message}</p>}
+      {plotData && (
+        <div className="w-full">
+          <Graph {...plotData} />
+        </div>
+      )}
     </div>
   );
 };
