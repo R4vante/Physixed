@@ -1,49 +1,78 @@
 "use client";
 import Graph from "@/components/graph";
-import React from "react";
+import React, { useState } from "react";
 
 const FreeFall = () => {
+  const [xData, setXData] = useState("");
+  const [xUnit, setXUnit] = useState("m");
+  const [yData, setYData] = useState("");
+  const [yUnit, setYUnit] = useState("m/s");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const response = await fetch(
+      "http://localhost:8000/kinematics/api/freefall/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          height: xData,
+          height_unit: xUnit,
+          velocity: yData,
+          velocity_unit: yUnit,
+        }),
+      }
+    );
+    const result = await response.json();
+    setMessage(result.height);
+    console.log(result);
+  };
+
   return (
-    <>
-      <section className="flex flex-col items-center sm:min-w-[35rem]">
-        <h1>Free fall</h1>
-        <div className="w-full flex items-center flex-col sm:flex-row sm:justify-between">
-          <div className="flex items-center justify-between">
-            <form action="" className="flex flex-col gap-y-4">
-              <div className="flex gap-x-4">
-                <input
-                  type="number"
-                  className="w-10"
-                  name="height"
-                  id="height"
-                />
-                <select name="height-unit" className="w-20" id="height-unit">
-                  <option value="m">m</option>
-                </select>
-              </div>
-              <div className="flex gap-x-4">
-                <input
-                  type="number"
-                  className="w-10"
-                  name="velocity"
-                  id="velocity"
-                />
-                <select
-                  name="velocity-unit"
-                  className="w-20"
-                  id="velocity-unit"
-                >
-                  <option value="m/s">m/s</option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <div className="flex sm:flex-1 items-center justify-center">
-            <Graph />
-          </div>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="xData">X Data:</label>
+          <input
+            type="text"
+            id="xData"
+            value={xData}
+            onChange={(e) => setXData(e.target.value)}
+            required
+          />
+          <select
+            id="xUnit"
+            value={xUnit}
+            onChange={(e) => setXUnit(e.target.value)}
+          >
+            <option value="m">m</option>
+          </select>
         </div>
-      </section>
-    </>
+        <div>
+          <label htmlFor="yData">Y Data:</label>
+          <input
+            type="text"
+            id="yData"
+            value={yData}
+            onChange={(e) => setYData(e.target.value)}
+            required
+          />
+          <select
+            id="yUnit"
+            value={yUnit}
+            onChange={(e) => setYUnit(e.target.value)}
+          >
+            <option value="m/s">m/s</option>
+            <option value="km/h">km/h</option>
+          </select>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      {message && <p>{message}</p>}
+    </div>
   );
 };
 
