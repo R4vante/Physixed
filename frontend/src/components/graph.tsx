@@ -1,14 +1,14 @@
 import { GraphProps } from "@/lib/types";
 import dynamic from "next/dynamic";
-import { Data, Layout } from "plotly.js";
 
-const Graph = (plotData: GraphProps) => {
-  const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+
+const Graph = ({ data, layout }: GraphProps) => {
   return (
     <>
       <Plot
-        data={plotData.data}
-        layout={plotData.layout}
+        data={data}
+        layout={layout}
         style={{ width: "100%", height: "100%" }}
       />
     </>

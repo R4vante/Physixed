@@ -8,8 +8,7 @@ const FreeFall = () => {
   const [xUnit, setXUnit] = useState("m");
   const [yData, setYData] = useState("");
   const [yUnit, setYUnit] = useState("m/s");
-  const [plotData, setPlotData] = useState<GraphProps>();
-  const [message, setMessage] = useState("");
+  const [plotData, setPlotData] = useState<GraphProps | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -29,20 +28,18 @@ const FreeFall = () => {
       }
     );
     const result = await response.json();
-    setMessage(result.plot_dict);
-
-    setPlotData(JSON.parse(result.plot_dict));
-    console.log(plotData);
+    setPlotData(JSON.parse(result.plot_dict)); // Parse the JSON plot data and set it in state
   };
 
   return (
-    <div className="w-full">
+    <div>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="xData">X Data:</label>
           <input
-            type="text"
+            type="number"
             id="xData"
+            placeholder="0"
             value={xData}
             onChange={(e) => setXData(e.target.value)}
             required
@@ -60,6 +57,7 @@ const FreeFall = () => {
           <input
             type="text"
             id="yData"
+            placeholder="0"
             value={yData}
             onChange={(e) => setYData(e.target.value)}
             required
@@ -70,14 +68,14 @@ const FreeFall = () => {
             onChange={(e) => setYUnit(e.target.value)}
           >
             <option value="m/s">m/s</option>
-            <option value="km /h">km/h</option>
+            <option value="km/h">km/h</option>
           </select>
         </div>
         <button type="submit">Submit</button>
       </form>
       {plotData && (
         <div className="w-full">
-          <Graph {...plotData} />
+          <Graph data={plotData.data} layout={plotData.layout} />
         </div>
       )}
     </div>
