@@ -10,6 +10,6 @@ class FreeFallSerializer(serializers.Serializer):
     """
 
     height = serializers.FloatField()
-    height_unit = serializers.ChoiceField(choices=[("m", "m")])
+    height_unit = serializers.ChoiceField(choices=[("m", "m"), ("km", "km")])
     velocity = serializers.FloatField()
     velocity_unit = serializers.ChoiceField(choices=[("m/s", "m/s"), ("km/h", "km/h")])
