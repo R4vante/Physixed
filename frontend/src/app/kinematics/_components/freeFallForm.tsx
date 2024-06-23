@@ -1,10 +1,24 @@
 "use client";
 
+import { TFreeFall, freeFallSchema } from "@/lib/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFreeFall>({
+    resolver: zodResolver(freeFallSchema),
+    defaultValues: {
+      height: "10",
+      height_unit: "m",
+      velocity: "0",
+      velocity_unit: "m/s",
+    },
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -16,6 +30,7 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
           type="number"
           placeholder="0"
         />
+        {errors.height && <p>{errors.height.message}</p>}
         <select {...register("height_unit")} id="xUnit">
           <option value="m">m</option>
           <option value="km">km</option>
@@ -42,5 +57,5 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
 export default FreeFallForm;
 
 type FreeFallFormProps = {
-  onSubmit: (data: FieldValues) => void;
+  onSubmit: (data: TFreeFall) => void;
 };
