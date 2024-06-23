@@ -20,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} h-[100vh] flex flex-col`}>
         <Header />
-        <main className="px-7 z-main-content flex-1 md:px-12 lg:px-17">{children}</main>
+        <main className="px-7 z-main-content flex-1 flex flex-col sm:flex-row sm:justify-center md:px-12 lg:px-17">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
