@@ -65,7 +65,7 @@ class TestPintHappy:
             ),
             (
                 (1, "W/(m K)", "W/(cm K)"),
-                (0.01, "W/K/cm"),
+                (0.01, "W/cm/K"),
             ),
             (
                 (1, "W/(m K)", None),
