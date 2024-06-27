@@ -2,7 +2,8 @@
 import FreeFallForm from "@/app/kinematics/_components/freeFallForm";
 import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
 import { GraphProps, TFreeFall } from "@/lib/types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const FreeFallContainer = () => {
   const [plotData, setPlotData] = useState<GraphProps | null>(null);
@@ -53,9 +54,18 @@ const FreeFallContainer = () => {
     <div>
       <FreeFallForm onSubmit={handleFormSubmit} />
       {plotData && (
-        <div className="w-full">
+        <motion.div
+          className="w-full"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 1.0,
+            delay: 0.5,
+            ease: [0, 0.7, 0.2, 1.0],
+          }}
+        >
           <FreeFallPlot data={plotData.data} layout={plotData.layout} />
-        </div>
+        </motion.div>
       )}
     </div>
   );
