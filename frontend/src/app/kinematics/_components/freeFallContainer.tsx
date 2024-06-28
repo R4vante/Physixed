@@ -2,7 +2,7 @@
 import FreeFallForm from "@/app/kinematics/_components/FreeFallForm";
 import FreeFallPlot from "@/app/kinematics/_components/FreeFallPlot";
 import { GraphProps, TFreeFall } from "@/lib/types";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Card from "@/components/ui/Card";
 
@@ -53,7 +53,7 @@ const FreeFallContainer = () => {
 
   return (
     <div className="flex flex-col items-center md:flex-row md:justify-around md:w-3/4 md:h-full">
-      <Card className="flex items-end md:w-1/2">
+      <Card className="flex items-end">
         <FreeFallForm onSubmit={handleFormSubmit} />
       </Card>
       <div className="w-1/2 flex justify-end">
@@ -68,7 +68,9 @@ const FreeFallContainer = () => {
               ease: [0, 0.7, 0.2, 1.0],
             }}
           >
-            <FreeFallPlot data={plotData.data} layout={plotData.layout} />
+            <Card>
+              <FreeFallPlot data={plotData.data} layout={plotData.layout} />
+            </Card>
           </motion.div>
         )}
       </div>
