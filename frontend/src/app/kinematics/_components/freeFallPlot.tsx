@@ -20,7 +20,7 @@ const FreeFallPlot = (plotData: GraphProps, className: string) => {
   return (
     <div
       className={cn(
-        "flex justify-center w-full h-full p-0 sm:w-96 sm:h-96",
+        "",
         className
       )}
     >
