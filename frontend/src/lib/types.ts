@@ -24,10 +24,15 @@ export type GraphProps = {
 
 // Schemas
 export const freeFallSchema = z.object({
-    height: z.string(),
+  height: z.coerce.number().min(1, {
+    message: "Height must be greater than 0."
+  }),
     height_unit: z.enum(["m", "km"]),
-    velocity: z.string(),
+    velocity: z.coerce.number().min(0, {
+      message: "Velocity must be greater than or equal to 0."
+    }),
     velocity_unit: z.enum(["m/s", "km/h"]),
   });
+
 
 export type TFreeFall = z.infer<typeof freeFallSchema>;

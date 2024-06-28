@@ -1,5 +1,6 @@
-import clsx, { ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { type ClassValue, clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-// utility function to merge tailwindCSS classes
-export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
