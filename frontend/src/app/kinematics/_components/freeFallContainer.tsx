@@ -4,7 +4,7 @@ import FreeFallPlot from "@/app/kinematics/_components/FreeFallPlot";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Card from "@/components/Card";
+import Card from "@/components/ui/Card";
 
 const FreeFallContainer = () => {
   const [plotData, setPlotData] = useState<GraphProps | null>(null);
@@ -52,14 +52,14 @@ const FreeFallContainer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center md:flex-row md:justify-between">
-      <Card className="flex items-center md:w-1/3">
+    <div className="flex flex-col items-center md:flex-row md:justify-around md:w-3/4 md:h-full">
+      <Card className="flex items-end md:w-1/2">
         <FreeFallForm onSubmit={handleFormSubmit} />
       </Card>
-      <div className="">
+      <div className="w-1/2 flex justify-end">
         {plotData && (
           <motion.div
-            className="w-fit h-fit"
+            className=""
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
