@@ -6,16 +6,27 @@ import React from "react";
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
 const FreeFallPlot = (plotData: GraphProps, className: string) => {
+  const adjustedLayout = {
+    ...plotData.layout,
+    autosize: true,
+    margin: {
+      l: 50, // Linker marge
+      r: 10, // Rechter marge, zo klein mogelijk
+      b: 50, // Onderste marge
+      t: 50, // Bovenste marge
+      pad: 0, // Padding
+    },
+  };
   return (
     <div
       className={cn(
-        "w-full h-full sm:w-96 sm:h-96 md:w-128 md:h-128 lg:w-full lg:h-full",
+        "flex justify-center w-full h-full p-0 sm:w-96 sm:h-96",
         className
       )}
     >
       <Plot
         data={plotData.data}
-        layout={{ ...plotData.layout, autosize: true }}
+        layout={adjustedLayout}
         useResizeHandler
         style={{ width: "100%", height: "100%" }}
         config={{ responsive: true }}

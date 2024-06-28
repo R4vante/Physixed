@@ -6,7 +6,7 @@ const Card = ({ className, children }: CardProps) => {
   return (
     <div
       className={cn(
-        "shadow-sm shadow-slate-900 rounded-md p-4 sm:p-6 mt-10 md:mt-0 bg-zinc-800",
+        "shadow-sm shadow-zinc-500 rounded-md p-4 sm:p-6 mt-10 md:mt-0 bg-[#DEE4E7]",
         className
       )}
     >

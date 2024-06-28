@@ -1,6 +1,6 @@
 "use client";
 
-import Label from "@/components/Label";
+import Label from "@/components/ui/Label";
 import { TFreeFall, freeFallSchema } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-    --background-body: #41424C;
-    --dark-background-body: #202122;
+    --background-body: #ebf0f5;
+    --dark-background-body: #41424C;
 }
 
 @layer base {
     body {
-        @apply bg-[var(--background-body)] text-[rgb(201,211,211)];
+        @apply bg-[var(--background-body)];
     }
     #root {
         @apply flex flex-col min-h-screen;
