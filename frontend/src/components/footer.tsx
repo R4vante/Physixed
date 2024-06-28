@@ -1,9 +1,12 @@
+import { cn } from "@/lib/utils";
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
 const Footer = ({ className, ...props }: FooterProps) => {
   return (
-    <footer className={twMerge("sticky text-center top-[100vh]", className)}>
+    <footer
+      {...props}
+      className={cn("sticky text-center top-[100vh]", className)}
+    >
       <p>&copy; Physixed 2024</p>
     </footer>
   );
