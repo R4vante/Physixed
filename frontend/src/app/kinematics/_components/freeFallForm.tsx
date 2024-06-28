@@ -1,6 +1,8 @@
 "use client";
 
+import Label from "@/components/Label";
 import { TFreeFall, freeFallSchema } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -23,7 +25,7 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label htmlFor="xData">X Data:</label>
+        <Label htmlFor="xData">x data</Label>
         <input
           {...register("height")}
           id="xData"

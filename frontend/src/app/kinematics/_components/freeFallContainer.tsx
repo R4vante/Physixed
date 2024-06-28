@@ -1,9 +1,10 @@
 "use client";
-import FreeFallForm from "@/app/kinematics/_components/freeFallForm";
-import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
+import FreeFallForm from "@/app/kinematics/_components/FreeFallForm";
+import FreeFallPlot from "@/app/kinematics/_components/FreeFallPlot";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Card from "@/components/Card";
 
 const FreeFallContainer = () => {
   const [plotData, setPlotData] = useState<GraphProps | null>(null);
@@ -51,22 +52,26 @@ const FreeFallContainer = () => {
   };
 
   return (
-    <div>
-      <FreeFallForm onSubmit={handleFormSubmit} />
-      {plotData && (
-        <motion.div
-          className="w-full"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 1.0,
-            delay: 0.5,
-            ease: [0, 0.7, 0.2, 1.0],
-          }}
-        >
-          <FreeFallPlot data={plotData.data} layout={plotData.layout} />
-        </motion.div>
-      )}
+    <div className="flex flex-col items-center md:flex-row md:justify-between">
+      <Card className="flex items-center md:w-1/3">
+        <FreeFallForm onSubmit={handleFormSubmit} />
+      </Card>
+      <div className="">
+        {plotData && (
+          <motion.div
+            className="w-fit h-fit"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 1.0,
+              delay: 0.5,
+              ease: [0, 0.7, 0.2, 1.0],
+            }}
+          >
+            <FreeFallPlot data={plotData.data} layout={plotData.layout} />
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
