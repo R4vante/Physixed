@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import ThemeProvider from "@/components/layout/themeProvider";
+import { ThemeProvider } from "@/components/layout/themeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html suppressHydrationWarning={true} lang="en">
       <body className={`${inter.className} h-[100vh] flex flex-col`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           <main className="z-main-content flex-1 flex flex-col sm:px-7 sm:flex-row sm:justify-center md:px-12 lg:px-17">
             {children}
