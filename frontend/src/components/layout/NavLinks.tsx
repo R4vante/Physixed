@@ -12,7 +12,7 @@ const NavLinks = ({
 }: NavLinksProps) => {
   return (
     <>
-      <Button className={twMerge("", className)} variant="link">
+      <Button className={twMerge(className)} variant="link">
         <Link href={href} onClick={onClick} {...props}>
           {children}
         </Link>
