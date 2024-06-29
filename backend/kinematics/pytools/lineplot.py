@@ -43,6 +43,7 @@ def make_plot(x_data: pint.Quantity, y_data: pint.Quantity) -> str:
         yaxis_title=f"{compact_unit_y:P}",
         modebar={"orientation": "v"},
         margin={"l": 5, "r": 5, "t": 5, "b": 5},
+        yaxis_range=[0, 1.1 * np.max(y_data.m_as(compact_unit_y))],
     )
 
     return fig.to_json()

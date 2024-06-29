@@ -30,6 +30,7 @@ const FreeFallPlot = (plotData: GraphProps, className: string) => {
       title: plotData.layout.yaxis?.title || {},
       gridcolor: isDark ? "#c6d6e7" : "#ddd",
       zerolinecolor: isDark ? "#c6d6e7" : "#ddd",
+      range: plotData.layout.yaxis?.range || [0, null],
     },
   };
 
