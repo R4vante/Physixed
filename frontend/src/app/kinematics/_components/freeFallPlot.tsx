@@ -22,12 +22,17 @@ const FreeFallPlot = (plotData: GraphProps, className: string) => {
       color: isDark ? "#c6d6e7" : "black",
     },
     xaxis: {
+      title: plotData.layout.xaxis?.title || {},
       gridcolor: isDark ? "#c6d6e7" : "#ddd",
       zerolinecolor: isDark ? "#c6d6e7" : "#ddd",
     },
     yaxis: {
+      title: plotData.layout.yaxis?.title || {},
       gridcolor: isDark ? "#c6d6e7" : "#ddd",
       zerolinecolor: isDark ? "#c6d6e7" : "#ddd",
+    },
+    margin: {
+      l: 50,
     },
   };
 
