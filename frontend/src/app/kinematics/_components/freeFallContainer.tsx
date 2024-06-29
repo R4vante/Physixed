@@ -49,9 +49,9 @@ const FreeFallContainer = () => {
   };
 
   return (
-    <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:items-center lg:h-full lg:w-3/4 lg:gap-x-10">
+    <div className="flex flex-col h-full items-center justify-between md:justify-between lg:flex-row lg:justify-between lg:h-full lg:w-3/4 lg:gap-x-10">
       <CardWrapper
-        className="flex flex-col justify-center items-center p-4 md:p-6 lg:w-1/2"
+        className="flex flex-col justify-self-start align-top items-center p-4 md:p-6 lg:w-1/2"
         title="FreeFall"
         label="Fill in your initial height and velocity here!"
       >
@@ -70,7 +70,7 @@ const FreeFallContainer = () => {
               ease: [0, 0.7, 0.2, 1.0],
             }}
           >
-            <CardWrapper className="w-full h-full flex-grow">
+            <CardWrapper className="w-full h-full">
               <FreeFallPlot
                 className="flex justify-center w-full h-full"
                 data={plotData.data}
