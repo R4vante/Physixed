@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { links } from "@/lib/data";
 import Image from "next/image";
-import LogoSvg from "@/assets/logo.svg";
+import LogoSvg from "/public/logo.svg";
 
 const Logo = () => {
   return (

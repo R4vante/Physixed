@@ -9,8 +9,7 @@ const FreeFallContainer = dynamic(
 const FreeFall = () => {
   return (
     <>
-      <section className="flex w-full space-between flex-col items-center">
-        <h1>Kinematics</h1>
+      <section className="flex w-full flex-col items-center">
         <FreeFallContainer />
       </section>
     </>
