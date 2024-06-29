@@ -46,7 +46,9 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
             name="height"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="height">Initial Height</FormLabel>
+                <FormLabel className="font-bold text-xl" htmlFor="height">
+                  Initial Height
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -97,7 +99,9 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
             name="velocity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="velocity">Velocity</FormLabel>
+                <FormLabel className="font-bold text-xl" htmlFor="velocity">
+                  Velocity
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
