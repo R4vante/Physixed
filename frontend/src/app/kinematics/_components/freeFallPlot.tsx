@@ -31,9 +31,6 @@ const FreeFallPlot = (plotData: GraphProps, className: string) => {
       gridcolor: isDark ? "#c6d6e7" : "#ddd",
       zerolinecolor: isDark ? "#c6d6e7" : "#ddd",
     },
-    margin: {
-      l: 50,
-    },
   };
 
   const adjustedData: Partial<Data>[] = plotData.data.map((trace) => ({
