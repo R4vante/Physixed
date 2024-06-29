@@ -12,7 +12,7 @@ const adjustLayout = (layout: Partial<Layout>, isDark: boolean) => ({
   ...layout,
   autosize: true,
   paper_bgcolor: "rgba(0,0,0,0)",
-  plot_bgcolor: isDark ? "#25272d" : "f0f0f0",
+  plot_bgcolor: isDark ? "#25272d" : "#f0f0f0",
   font: {
     color: isDark ? "#c6d6e7" : "black",
   },
