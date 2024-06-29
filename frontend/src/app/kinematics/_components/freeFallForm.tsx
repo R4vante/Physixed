@@ -48,7 +48,13 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
               <FormItem>
                 <FormLabel htmlFor="height">Initial Height</FormLabel>
                 <FormControl>
-                  <Input {...field} type="number" step="any" id="height" />
+                  <Input
+                    {...field}
+                    className="w-28 text-right"
+                    type="number"
+                    step="any"
+                    id="height"
+                  />
                 </FormControl>
                 <FormMessage>
                   {form.formState.errors.height?.message}
@@ -60,8 +66,7 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
             control={form.control}
             name="height_unit"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="height_unit">Unit</FormLabel>
+              <FormItem className="flex items-end">
                 <FormControl>
                   <Controller
                     control={form.control}
@@ -71,8 +76,8 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
                         onValueChange={field.onChange}
                         value={field.value}
                       >
-                        <SelectTrigger id="height_unit">
-                          <SelectValue placeholder="Select a height unit" />
+                        <SelectTrigger className="w-28" id="height_unit">
+                          <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="m">m</SelectItem>
@@ -94,7 +99,13 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
               <FormItem>
                 <FormLabel htmlFor="velocity">Velocity</FormLabel>
                 <FormControl>
-                  <Input {...field} type="number" step="any" id="velocity" />
+                  <Input
+                    {...field}
+                    className="w-28 text-right"
+                    type="number"
+                    step="any"
+                    id="velocity"
+                  />
                 </FormControl>
                 <FormMessage>
                   {form.formState.errors.velocity?.message}
@@ -106,8 +117,8 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
             control={form.control}
             name="velocity_unit"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="velocity_unit">Velocity Unit</FormLabel>
+              <FormItem className="flex items-end">
+                {/* <FormLabel htmlFor="velocity_unit">Velocity Unit</FormLabel> */}
                 <FormControl>
                   <Controller
                     control={form.control}
@@ -117,8 +128,8 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
                         onValueChange={field.onChange}
                         value={field.value}
                       >
-                        <SelectTrigger id="velocity_unit">
-                          <SelectValue placeholder="Select a velocity unit" />
+                        <SelectTrigger className="w-28" id="velocity_unit">
+                          <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="m/s">m/s</SelectItem>
