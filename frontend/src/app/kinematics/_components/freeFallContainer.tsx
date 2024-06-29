@@ -23,7 +23,6 @@ const FreeFallContainer = () => {
         }
       );
 
-      // Controleer of de response niet ok is (statuscode buiten 200-299)
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
       }
@@ -31,14 +30,12 @@ const FreeFallContainer = () => {
       const result = await response.json();
       console.log(result);
 
-      // Controleer of result.plot_dict aanwezig en correct geformatteerd is
       if (!result.plot_dict) {
         throw new Error("Invalid plot data received from server");
       }
 
       const parsedData: GraphProps = JSON.parse(result.plot_dict);
 
-      // Controleer of de vereiste velden aanwezig zijn in parsedData
       if (!parsedData.data || !parsedData.layout) {
         throw new Error("Parsed plot data is missing required fields");
       }
@@ -46,15 +43,13 @@ const FreeFallContainer = () => {
       setPlotData(parsedData);
     } catch (error) {
       console.error("Error fetching plot data:", error);
-      // Reset plotData to null if there's an error
       setPlotData(null);
-      // Eventueel: Toon een gebruikersvriendelijke foutmelding
       alert("Failed to fetch plot data. Please try again.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:items-center lg:h-full lg:w-3/4">
+    <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:items-center lg:h-full lg:w-3/4 lg:gap-x-10">
       <CardWrapper
         className="flex flex-col justify-center items-center p-4 md:p-6 lg:w-1/2"
         title="FreeFall"
@@ -63,26 +58,28 @@ const FreeFallContainer = () => {
         <FreeFallForm onSubmit={handleFormSubmit} />
       </CardWrapper>
 
-      {plotData && (
-        <motion.div
-          className="mt-4 w-full lg:w-1/2 lg:h-full"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 1.0,
-            delay: 0.5,
-            ease: [0, 0.7, 0.2, 1.0],
-          }}
-        >
-          <CardWrapper className="md:m-4">
-            <FreeFallPlot
-              className="flex justify-center md:w-full pr-4 md:p-0"
-              data={plotData.data}
-              layout={plotData.layout}
-            />
-          </CardWrapper>
-        </motion.div>
-      )}
+      <div className="flex flex-col items-center w-full lg:w-1/2">
+        {plotData && (
+          <motion.div
+            className="mt-4 w-full h-full flex-grow"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 1.0,
+              delay: 0.5,
+              ease: [0, 0.7, 0.2, 1.0],
+            }}
+          >
+            <CardWrapper className="w-full h-full flex-grow">
+              <FreeFallPlot
+                className="flex justify-center w-full h-full"
+                data={plotData.data}
+                layout={plotData.layout}
+              />
+            </CardWrapper>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
