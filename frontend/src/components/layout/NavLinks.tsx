@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
@@ -11,14 +12,11 @@ const NavLinks = ({
 }: NavLinksProps) => {
   return (
     <>
-      <Link
-        href={href}
-        onClick={onClick}
-        {...props}
-        className={twMerge("hover:text-white", className)}
-      >
-        {children}
-      </Link>
+      <Button className={twMerge("", className)} variant="link">
+        <Link href={href} onClick={onClick} {...props}>
+          {children}
+        </Link>
+      </Button>
     </>
   );
 };
