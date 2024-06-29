@@ -9,19 +9,6 @@ export type GraphProps = {
     layout: Partial<Layout>;
   };
 
-  export type LabelProps = {
-    htmlFor: string;
-    children: React.ReactNode;
-    className?: string;
-  };
-
-  export type CardProps = {
-    children: React.ReactNode;
-    className?: string;
-  }
-
-
-
 // Schemas
 export const freeFallSchema = z.object({
   height: z.coerce.number().min(1, {

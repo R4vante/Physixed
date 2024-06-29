@@ -150,43 +150,12 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
         <Button variant="default" type="submit">
           Submit
         </Button>
-        {/* <button type="submit">Submit</button> */}
       </form>
     </Form>
   );
 };
 
 export default FreeFallForm;
-
-{
-  /* <label htmlFor="xData">x data</label>
-          <input
-            {...form.register("height")}
-            id="xData"
-            type="number"
-            placeholder="0"
-          />
-          {form.formState.errors.height && (
-            <p>{form.formState.errors.height.message}</p>
-          )}
-          <select {...form.register("height_unit")} id="xUnit">
-            <option value="m">m</option>
-            <option value="km">km</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="yData">Y Data:</label>
-          <input
-            {...form.register("velocity")}
-            id="yData"
-            type="text"
-            placeholder="0"
-          />
-          <select {...form.register("velocity_unit")} id="yUnit">
-            <option value="m/s">m/s</option>
-            <option value="km/h">km/h</option>
-          </select> */
-}
 
 type FreeFallFormProps = {
   onSubmit: (data: TFreeFall) => void;

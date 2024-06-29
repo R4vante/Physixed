@@ -28,7 +28,6 @@ const FreeFallContainer = () => {
       }
 
       const result = await response.json();
-      console.log(result);
 
       if (!result.plot_dict) {
         throw new Error("Invalid plot data received from server");
