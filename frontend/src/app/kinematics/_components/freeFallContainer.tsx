@@ -4,7 +4,7 @@ import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
+import FreeFallPlot from "@/app/kinematics/_components/FreeFallPlot";
 import CardWrapper from "@/components/ui/cardWrapper";
 
 const FreeFallContainer = () => {
