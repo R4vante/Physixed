@@ -6,7 +6,7 @@ import Logo from "@/components/layout/Logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
 import NavLinks from "@/components/layout/NavLinks";
-import { ThemeToggle } from "@/components/layout/themeToggle";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
