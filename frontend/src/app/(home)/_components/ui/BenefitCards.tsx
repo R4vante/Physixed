@@ -8,13 +8,15 @@ const BenefitCards = ({ className, logo, text }: BenefitCardsProps) => {
       <div className="flex flex-col items-center gap-y-6">
         <Card
           className={cn(
-            "rounded-full size-32 flex justify-center items-center",
+            "rounded-full flex justify-center items-center shadow-sm lg:shadow",
             className
           )}
         >
           <CardHeader>{logo}</CardHeader>
         </Card>
-        <p className="text-muted-foreground text-center w-64">{text}</p>
+        <p className="text-muted-foreground text-center w-3/4 lg:w-64">
+          {text}
+        </p>
       </div>
     </>
   );
