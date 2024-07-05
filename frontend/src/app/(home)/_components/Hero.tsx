@@ -7,7 +7,7 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <>
-      <section className="relative h-[100vh] container grid lg:grid-cols-2 place-items-center py-20 md:py-16 lg:mb-12 xl:w-full gap-10">
+      <section className="relative h-[100vh] container grid lg:grid-cols-2 place-items-center py-20 md:py-16 xl:w-full gap-10 sm:px-7 md:px-12 lg:px-16">
         <div className="text-center lg:text-start space-y-6">
           <section className="flex flex-col gap-y-3">
             <h1 className="inline text-5xl md:text-6xl">
@@ -33,7 +33,7 @@ const Hero = () => {
 
         <div className="animation-bg justify-self-end"></div>
         <HeroImage
-          className="hidden lg:flex absolute -right-[3rem] -bottom-px"
+          className="hidden lg:flex absolute -right-0 -bottom-px"
           width={700}
         />
       </section>

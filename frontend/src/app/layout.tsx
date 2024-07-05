@@ -36,7 +36,7 @@ export default function RootLayout({
       <body className={`${inter.className} h-[100vh] flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
-          <main className="z-main-content flex-1 flex flex-col sm:px-7 sm:flex-row sm:justify-center md:px-12 lg:px-17">
+          <main className="z-main-content flex-1 flex flex-col sm:flex-row sm:justify-center">
             {children}
           </main>
           <Footer />
