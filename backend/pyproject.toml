@@ -82,6 +82,10 @@ max-args = 8
 max-branches = 20
 max-statements = 100
 
+[tool.ruff.lint.isort]
+known-local-folder = ["backend"]
+
+
 [tool.poetry]
 name = "physixed"
 version = "0.0.1"
