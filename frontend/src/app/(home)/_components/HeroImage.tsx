@@ -9,6 +9,7 @@ const HeroImage = ({ className, width }: HeroImageProps) => {
         src={MoonImage}
         alt="Image of the surface of the moon"
         width={width || 500}
+        priority={true}
       />
     </div>
   );
