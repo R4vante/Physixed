@@ -1,6 +1,38 @@
+import os
+
 import numpy as np
 import pint
+import resend
+from django.conf import settings
 from numpy._typing import NDArray
+
+
+def email_resend(data: dict) -> dict:
+    """Send email to developer.
+
+    Args:
+        data (dict): form information send from the frontend.
+
+    Returns:
+        dict: return message
+
+    """
+    resend.api_key = os.environ["RESEND_API_KEY"]
+    try:
+        resend.Emails.send(
+            {
+                "from": "Acme <onboarding@resend.dev>",
+                "to": [settings.DEVELOPER_EMAIL],
+                "subject": f"Message from {data['name']}<{data['email']}>",
+                "reply_to": data["email"],
+                "html": f"<p>{data['message']}<p>",
+            }
+        )
+    except resend.exceptions.ValidationError as e:
+        e.message = "Invalid email address."
+        return {"message": "Validation error. Check your provided information."}
+    else:
+        return {"message": "Your message has been sent successfully."}
 
 
 def ureg_f() -> pint.UnitRegistry:

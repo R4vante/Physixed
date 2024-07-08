@@ -1,10 +1,12 @@
-from collections.abc import Callable
+from collections.abc import Callable, Generator
+from unittest.mock import MagicMock, patch
 
 import numpy as np
 import pint
 import pytest
+import resend
 
-from ..pytools import utils
+from base.pytools import utils
 
 # TODO: Clean up the files and make parametrize smaller
 
@@ -17,6 +19,18 @@ def registry() -> Callable:
         return utils.ureg_f()(unit)
 
     return _registry
+
+
+@pytest.fixture()
+def mock_resend() -> Generator[MagicMock, None, None]:
+    """Mock for resend email function.
+
+    Yields
+        Generator[MagicMock, None, None]: mock for resend email function
+
+    """
+    with patch("resend.Emails.send") as mock_resend:
+        yield mock_resend
 
 
 class TestPintHappy:
@@ -133,3 +147,31 @@ class TestPintSad:
         with pytest.raises(TypeError) as exp:
             utils._try_convert_2_quantity((10, 10), 10)
         assert str(exp.value) == f"str expected, got {int}"
+
+
+class TestEmail:
+    """Test email sending."""
+
+    @pytest.mark.usefixtures("mock_resend")
+    def test_email_resend(self) -> None:
+        """Test succesfull validation of form information."""
+        valid_data = {
+            "name": "John Doe",
+            "email": "john.doe@test.com",
+            "message": "Hello World",
+        }
+
+        assert utils.email_resend(valid_data) == {"message": "Your message has been sent successfully."}
+
+    def test_email_resend_error(self, mock_resend: pytest.FixtureRequest) -> None:
+        """Test error handling of the email sending."""
+        mock_resend.side_effect = resend.exceptions.ValidationError(
+            "Invalid email address.", error_type="email", code=400
+        )
+        invalid_data = {
+            "name": "John Doe",
+            "email": "john.doe@test",
+            "message": "Hello World",
+        }
+
+        assert utils.email_resend(invalid_data)["message"] == "Validation error. Check your provided information."
