@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html suppressHydrationWarning={true} lang="en">
       <body className={`${inter.className} h-[100vh] flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
           <Header />
           <main className="z-main-content flex-1 flex flex-col sm:flex-row sm:justify-center">
             {children}
