@@ -16,9 +16,10 @@ import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 
 const ContactForm = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_DJANGO_API_URL;
   const onSubmit = async (data: TContact) => {
     try {
-      const response = await fetch("http://localhost:8000/api/contact/", {
+      const response = await fetch(`${baseUrl}/base/contact/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
