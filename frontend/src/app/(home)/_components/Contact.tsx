@@ -1,3 +1,4 @@
+import ContactButton from "@/app/(home)/_components/ContactButton";
 import ContactForm from "@/app/(home)/_components/ContactForm";
 import CardWrapper from "@/components/ui/cardWrapper";
 
@@ -14,9 +15,7 @@ const Contact = () => {
             aliquip ex ea commodo consequat.
           </p>
           <div className="flex gap-4">
-            <a href="mailto:" className="btn btn-primary">
-              Email Us
-            </a>
+            <ContactButton>Email us</ContactButton>
           </div>
         </div>
       </div>
