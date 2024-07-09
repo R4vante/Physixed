@@ -33,31 +33,6 @@ def mock_resend() -> Generator[MagicMock, None, None]:
         yield mock_resend
 
 
-@pytest.fixture()
-def mock_resend_api() -> Generator[MagicMock, None, None]:
-    """Mock for resend api key.
-
-    Yields
-        Generator[MagicMock, None, None]: mock for resend api key
-
-    """
-    with patch("resend.api_key") as mock_resend_api:
-        yield mock_resend_api
-
-
-@pytest.fixture()
-def mock_environ() -> Generator[MagicMock, None, None]:
-    """Mock for resend api key.
-
-    Yields
-        Generator[MagicMock, None, None]: mock for resend api key
-
-    """
-    with patch("os.environ") as mock_environ:
-        mock_environ.__getitem__.return_value = "RESEND_API_KEY"
-        yield mock_environ
-
-
 class TestPintHappy:
     """Happy-path tests for all pint related functions."""
 
@@ -177,7 +152,7 @@ class TestPintSad:
 class TestEmail:
     """Test email sending."""
 
-    @pytest.mark.usefixtures("mock_resend", "mock_resend_api", "mock_environ")
+    @pytest.mark.usefixtures("mock_resend")
     def test_email_resend(self) -> None:
         """Test succesfull validation of form information."""
         valid_data = {
