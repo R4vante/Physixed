@@ -6,7 +6,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -17,7 +16,30 @@ import { Textarea } from "@/components/ui/textarea";
 
 const ContactForm = () => {
   const onSubmit = async (data: TContact) => {
-    console.log(data);
+    try {
+      const response = await fetch("http://localhost:8000/api/contact/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+
+      if (!result.message) {
+        throw new Error(result.error || "Invalid response from server");
+      }
+
+      alert(result.message);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send message. Please try again.");
+    }
   };
   const form = useForm<TContact>({
     resolver: zodResolver(contactSchema),

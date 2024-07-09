@@ -174,4 +174,4 @@ class TestEmail:
             "message": "Hello World",
         }
 
-        assert utils.email_resend(invalid_data)["message"] == "Validation error. Check your provided information."
+        assert utils.email_resend(invalid_data)["error"] == "Something went wrong! Check your provided information."
