@@ -35,6 +35,8 @@ jobs:
 
       - name: Run Tests
         shell: bash -l {0}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
           cd backend
           poetry run python -m pytest .
