@@ -5,8 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@/components/layout/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
-import NavLinks from "@/components/layout/mavLinks";
-import { ThemeToggle } from "@/components/layout/themeToggle";
+import NavLinks from "@/components/layout/navLinks";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
