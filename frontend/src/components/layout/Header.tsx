@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Logo from "@/components/layout/Logo";
+import Logo from "@/components/layout/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
-import NavLinks from "@/components/layout/NavLinks";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import NavLinks from "@/components/layout/mavLinks";
+import { ThemeToggle } from "@/components/layout/themeToggle";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);

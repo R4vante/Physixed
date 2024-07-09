@@ -1,5 +1,5 @@
-import ContactButton from "@/app/(home)/_components/ContactButton";
-import ContactForm from "@/app/(home)/_components/ContactForm";
+import ContactButton from "@/app/(home)/_components/contactButton";
+import ContactForm from "@/app/(home)/_components/contactForm";
 import CardWrapper from "@/components/ui/cardWrapper";
 
 const Contact = () => {

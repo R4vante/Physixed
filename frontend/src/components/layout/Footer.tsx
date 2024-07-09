@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { ThemeToggle } from "@/components/layout/themeToggle";
 import { cn } from "@/lib/utils";
 import React from "react";
 

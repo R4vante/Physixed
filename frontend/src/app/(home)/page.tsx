@@ -1,6 +1,6 @@
-import Benefits from "@/app/(home)/_components/Benefits";
-import Hero from "@/app/(home)/_components/Hero";
-import Contact from "@/app/(home)/_components/Contact";
+import Benefits from "@/app/(home)/_components/benefits";
+import Hero from "@/app/(home)/_components/hero";
+import Contact from "@/app/(home)/_components/contact";
 import React from "react";
 
 const Home = () => {

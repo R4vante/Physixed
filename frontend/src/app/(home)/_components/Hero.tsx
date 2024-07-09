@@ -1,6 +1,6 @@
-import HeroCards from "@/app/(home)/_components/HeroImage";
+import HeroCards from "@/app/(home)/_components/heroImage";
 import "../index.css";
-import HeroImage from "@/app/(home)/_components/HeroImage";
+import HeroImage from "@/app/(home)/_components/heroImage";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
