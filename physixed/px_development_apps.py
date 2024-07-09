@@ -1,12 +1,12 @@
 from typing import Any
 
 development_apps: dict[str, Any] = {
-    "base": {
-        "mount_point": "api/base/",
+    "px_main": {
+        "mount_point": "",
         "log_files": ["views"],
     },
-    "kinematics": {
-        "mount_point": "api/kinematics/",
+    "px_kinematics": {
+        "mount_point": "px/kinematics/",
         "log_files": ["views"],
     },
 }

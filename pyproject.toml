@@ -117,6 +117,7 @@ django-cors-headers = "^4.4.0"
 pint = "^0.24"
 resend = "^2.2.0"
 
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

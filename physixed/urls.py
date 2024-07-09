@@ -58,8 +58,9 @@ def update_urlpatterns(mount_point: str, app_directory: str, urlpatterns: list) 
     # This handles all regular cases, and the special case for "basic.apps.BasicCommonConfig"
     directory_base = app_directory.split(".")[0]
     if mount_point is not None:
-        mount_point = mount_point.removeprefix("/")
-        if not (mount_point.endswith("/")) and mount_point != "":
+        if mount_point.startswith("/"):
+            mount_point = mount_point[1:]
+        if not (mount_point.endswith("/")) and len(mount_point) > 0:
             mount_point += "/"
         urlpatterns.append(
             path(
