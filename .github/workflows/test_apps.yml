@@ -2,7 +2,7 @@ name: Test Apps
 
 on:
   pull_request:
-    branches: ["main"]
+    branches: ["main", "develop"]
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Load cached $HOME/.local
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v4
         with:
           path: ~/.local
           key: dotlocal-${{ runner.os }}-${{ hashFiles('.github/workflows/pr-deployer.yml') }}
@@ -28,11 +28,15 @@ jobs:
       - name: Install dependencies
         shell: bash -l {0}
         run: |
+          cd backend
           python -m pip install --upgrade pip
           pip install poetry
           poetry install
 
       - name: Run Tests
         shell: bash -l {0}
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: |
+          cd backend
           poetry run python -m pytest .

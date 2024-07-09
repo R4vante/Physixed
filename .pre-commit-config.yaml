@@ -31,12 +31,6 @@ repos:
       - id: mypy
         args: ["--ignore-missing-imports", "--check-untyped-defs"]
 
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.10.1
-    hooks:
-      - id: isort
-        args: ["--profile", "black"]
-
   - repo: https://github.com/psf/black
     rev: 24.2.0
     hooks:
@@ -52,3 +46,8 @@ repos:
     rev: "v0.2.1"
     hooks:
       - id: ruff
+        name: ruff lint
+        files: "^backend/"
+      - id: ruff-format
+        name: ruff format
+        files: "^backend/"
