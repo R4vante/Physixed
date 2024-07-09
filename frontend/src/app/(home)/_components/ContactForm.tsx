@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { contactSchema, TContact } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
+import toast from "react-hot-toast";
 
 const ContactForm = () => {
   const onSubmit = async (data: TContact) => {
@@ -35,10 +36,11 @@ const ContactForm = () => {
         throw new Error(result.error || "Invalid response from server");
       }
 
-      alert(result.message);
+      toast.success(result.message);
     } catch (error) {
-      console.error("Error sending message:", error);
-      alert("Failed to send message. Please try again.");
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred";
+      toast.error(errorMessage);
     }
   };
   const form = useForm<TContact>({
