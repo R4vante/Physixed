@@ -31,10 +31,10 @@ class ContactView(APIView):
 
         serializer = ContactSerializer(data=request.data)
         if serializer.is_valid():
-try:
-    data = email_resend(serializer.validated_data)
-except Exception as e:
-    return Response({'error': str(e)}, status=400)
+            try:
+                data = email_resend(serializer.validated_data)
+            except (TypeError, KeyError) as e:
+                return Response({"error": str(e)}, status=400)
             return Response(
                 data,
                 status=status.HTTP_200_OK,
