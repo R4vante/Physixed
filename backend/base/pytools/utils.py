@@ -30,7 +30,7 @@ def email_resend(data: dict) -> dict:
         )
     except resend.exceptions.ValidationError as e:
         e.message = "Invalid email address."
-        return {"message": "Validation error. Check your provided information."}
+        return {"error": "Something went wrong! Check your provided information."}
     else:
         return {"message": "Your message has been sent successfully."}
 
