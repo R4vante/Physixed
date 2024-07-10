@@ -1,6 +1,6 @@
 [project]
 name = "physixed"
-version ="0.1.0"
+version ="0.0.1"
 
 [tool.black]
 target-version = ["py311"]
@@ -115,7 +115,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.commitizen]
-version = "0.1.0"
+version = "0.0.1"
 version_files = [
     "pyproject.toml:^version"
 ]
