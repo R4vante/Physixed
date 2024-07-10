@@ -1,4 +1,4 @@
-name: Bump version
+name: Create Release
 
 on:
   push:
@@ -6,16 +6,11 @@ on:
       - main
 
 jobs:
-  bump-version:
-    if: "!startsWith(github.event.head_commit.message, 'bump:')"
+  create-release:
     runs-on: ubuntu-latest
-    name: "Bump version and create changelog with commitizen"
     steps:
-      - name: Check out
+      - name: Check out code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: "${{ secrets.RELEASE }}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -27,31 +22,43 @@ jobs:
         with:
           python-version: "3.9"
 
+      - name: Check for frontend changes
+        id: frontend_changes
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep -q '^frontend/'; then
+            echo "frontend_changed=true" >> $GITHUB_ENV
+          else
+            echo "frontend_changed=false" >> $GITHUB_ENV
+          fi
+
+      - name: Check for backend changes
+        id: backend_changes
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep -q '^backend/'; then
+            echo "backend_changed=true" >> $GITHUB_ENV
+          else
+            echo "backend_changed=false" >> $GITHUB_ENV
+          fi
+
       - name: Bump frontend version and create changelog
+        if: env.frontend_changed == 'true'
         run: |
           cd frontend
           npx commitizen bump --yes
           npx commitizen changelog
           cd ..
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump backend version and create changelog
+        if: env.backend_changed == 'true'
         run: |
           cd backend
           cz bump --yes
           cz changelog
           cd ..
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE }}
-
-      - name: Combine changelogs
-        run: |
-          echo "# Combined Changelog" > COMBINED_CHANGELOG.md
-          echo "\n## Frontend\n" >> COMBINED_CHANGELOG.md
-          cat frontend/CHANGELOG.md >> COMBINED_CHANGELOG.md
-          echo "\n## Backend\n" >> COMBINED_CHANGELOG.md
-          cat backend/CHANGELOG.md >> COMBINED_CHANGELOG.md
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit and push changes
         run: |
@@ -61,12 +68,13 @@ jobs:
           git commit -m "bump: version for frontend and backend"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release
+        if: env.frontend_changed == 'true' || env.backend_changed == 'true'
         uses: softprops/action-gh-release@v1
         with:
-          body_path: "COMBINED_CHANGELOG.md"
+          body_path: "frontend/CHANGELOG.md backend/CHANGELOG.md"
           tag_name: ${{ env.REVISION }}
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
