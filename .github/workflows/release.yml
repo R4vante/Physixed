@@ -16,15 +16,57 @@ jobs:
         with:
           fetch-depth: 0
           token: "${{ secrets.RELEASE }}"
-      - name: Create bump and changelog
-        uses: commitizen-tools/commitizen-action@master
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          github_token: ${{ secrets.RELEASE }}
-          changelog_increment_filename: body.md
-      - name: Release
+          node-version: "14"
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Bump frontend version and create changelog
+        run: |
+          cd frontend
+          npx commitizen bump --yes
+          npx commitizen changelog
+          cd ..
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+
+      - name: Bump backend version and create changelog
+        run: |
+          cd backend
+          cz bump --yes
+          cz changelog
+          cd ..
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+
+      - name: Combine changelogs
+        run: |
+          echo "# Combined Changelog" > COMBINED_CHANGELOG.md
+          echo "\n## Frontend\n" >> COMBINED_CHANGELOG.md
+          cat frontend/CHANGELOG.md >> COMBINED_CHANGELOG.md
+          echo "\n## Backend\n" >> COMBINED_CHANGELOG.md
+          cat backend/CHANGELOG.md >> COMBINED_CHANGELOG.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "bump: version for frontend and backend"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
+
+      - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: "body.md"
+          body_path: "COMBINED_CHANGELOG.md"
           tag_name: ${{ env.REVISION }}
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE }}
