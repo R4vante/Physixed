@@ -1,27 +1,24 @@
 "use client";
-import FreeFallForm from "@/app/kinematics/_components/FreeFallForm";
+import FreeFallForm from "@/app/kinematics/_components/freeFallForm";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import FreeFallPlot from "@/app/kinematics/_components/FreeFallPlot";
+import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
 import CardWrapper from "@/components/ui/cardWrapper";
 
 const FreeFallContainer = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_DJANGO_API_URL;
   const [plotData, setPlotData] = useState<GraphProps | null>(null);
 
   const handleFormSubmit = async (data: TFreeFall) => {
     try {
-      const response = await fetch(
-        "http://localhost:8000/kinematics/api/freefall/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`${baseUrl}/kinematics/freefall/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);

@@ -6,5 +6,5 @@ from base.views import ContactView
 app_name = config.APP_SLUG
 
 urlpatterns = [
-    path("api/contact/", ContactView.as_view(), name="contact"),
+    path("contact/", ContactView.as_view(), name="contact"),
 ]
