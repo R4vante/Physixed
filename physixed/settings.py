@@ -12,18 +12,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from __future__ import annotations
 
-import os
-import pathlib
 from collections.abc import Sequence
 from pathlib import Path
 
-from dotenv import dotenv_values, load_dotenv
+from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Load environmental variables
-load_dotenv(pathlib.Path(BASE_DIR) / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -38,18 +33,10 @@ allowed_hosts_fallback = "localhost 127.0.0.1 [::1]"
 ALLOWED_HOSTS = dotenv_values(dotenv_path=".env").get("ALLOWED_HOSTS", allowed_hosts_fallback).split(" ")
 
 
-# Admins
+# Admin
 
 ADMINS = ("Leroy Teegelbeckers", "multiduckk@gmail.com")
 MANAGERS = ADMINS
-
-# Resend
-
-RESEND_API_KEY = os.getenv("RESEND_API_KEY")
-
-DEVELOPER_NAME = os.getenv("DEVELOPER_NAME")
-DEVELOPER_EMAIL = os.getenv("DEVELOPER_EMAIL")
-
 
 # Application definition
 
@@ -65,8 +52,6 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS: list[str] = [
     # Third party apps
     #######################
-    "rest_framework",
-    "corsheaders",
 ]
 
 LOCAL_APPS: list[str] = []
@@ -81,15 +66,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "physixed.urls"
-
-# Corsheaders
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
 
 TEMPLATES = [
     {
@@ -192,7 +171,7 @@ except ImportError as e:
     raise AssertionError(msg) from e
 
 try:
-    if bool(DEBUG):
+    if bool(DEBUG) is True:
         from .px_development_apps import development_apps
 except ImportError:
     msg = """
@@ -234,7 +213,7 @@ def update_applist_logging(
 for app_directory, appdict in baseline_apps.items():
     update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
 
-if bool(DEBUG):
+if bool(DEBUG) is True:
     # We are on development/debug mode
     for app_directory, appdict in development_apps.items():
         update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
