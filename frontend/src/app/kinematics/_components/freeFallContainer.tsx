@@ -2,14 +2,17 @@
 import FreeFallForm from "@/app/kinematics/_components/freeFallForm";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
+import { AnimatePresence, motion } from "framer-motion";
 import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
 import CardWrapper from "@/components/ui/cardWrapper";
+import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
 
 const FreeFallContainer = () => {
   const baseUrl = process.env.NEXT_PUBLIC_DJANGO_API_URL;
-  const [plotData, setPlotData] = useState<GraphProps | null>(null);
+  const [heightData, setHeightData] = useState<GraphProps | null>(null);
+  const [velocityData, setVelocityData] = useState<GraphProps | null>(null);
+  const [isVelocity, setIsVelocity] = useState(false);
 
   const handleFormSubmit = async (data: TFreeFall) => {
     try {
@@ -27,21 +30,28 @@ const FreeFallContainer = () => {
 
       const result = await response.json();
 
-      if (!result.plot_dict) {
-        throw new Error("Invalid plot data received from server");
+      if (!result.height_dict) {
+        throw new Error("Could not receive height data from server.");
+      }
+      if (!result.velocity_dict) {
+        throw new Error("Could not receive velocity data from server.");
       }
 
-      const parsedData: GraphProps = JSON.parse(result.plot_dict);
+      const parsedHeightData: GraphProps = JSON.parse(result.height_dict);
 
-      if (!parsedData.data || !parsedData.layout) {
+      const parsedVelocityData: GraphProps = JSON.parse(result.velocity_dict);
+
+      if (!parsedHeightData.data || !parsedHeightData.layout) {
         throw new Error("Parsed plot data is missing required fields");
       }
 
-      setPlotData(parsedData);
+      setHeightData(parsedHeightData);
+      setVelocityData(parsedVelocityData);
     } catch (error) {
       console.error("Error fetching plot data:", error);
-      setPlotData(null);
-      alert("Failed to fetch plot data. Please try again.");
+      setHeightData(null);
+      setVelocityData(null);
+      toast.error("Failed to fetch plot data. Please try again.");
     }
   };
 
@@ -56,25 +66,66 @@ const FreeFallContainer = () => {
       </CardWrapper>
 
       <div className="flex flex-col items-center w-full lg:w-1/2">
-        {plotData && (
-          <motion.div
-            className="mt-4 w-full h-full flex-grow"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 1.0,
-              delay: 0.5,
-              ease: [0, 0.7, 0.2, 1.0],
-            }}
-          >
-            <CardWrapper className="w-full h-full">
-              <FreeFallPlot
-                className="flex justify-center w-full h-full"
-                data={plotData.data}
-                layout={plotData.layout}
-              />
-            </CardWrapper>
-          </motion.div>
+        {heightData && velocityData && (
+          <AnimatePresence mode="wait">
+            {isVelocity ? (
+              <motion.div
+                key="heightPlot"
+                className="mt-4 w-full h-full flex-grow"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{
+                  duration: 1.0,
+                  delay: 0.5,
+                  ease: [0, 0.7, 0.2, 1.0],
+                }}
+              >
+                <CardWrapper className="w-full h-full">
+                  <FreeFallPlot
+                    className="flex justify-center w-full h-full"
+                    data={velocityData.data}
+                    layout={velocityData.layout}
+                  />
+                  <Button
+                    variant="default"
+                    onClick={() => setIsVelocity(!isVelocity)}
+                  >
+                    Plot Height
+                  </Button>
+                </CardWrapper>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="heightPlot"
+                className="mt-4 w-full h-full flex-grow"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, x: -100 }}
+                transition={{
+                  duration: 1.0,
+                  delay: 0.5,
+                  ease: [0, 0.7, 0.2, 1.0],
+                }}
+              >
+                <CardWrapper className="flex flex-col">
+                  <FreeFallPlot
+                    className="flex justify-center w-full h-full"
+                    data={heightData.data}
+                    layout={heightData.layout}
+                  />
+                  <div className="w-full flex justify-end">
+                    <Button
+                      variant="link"
+                      onClick={() => setIsVelocity(!isVelocity)}
+                    >
+                      Plot Velocity
+                    </Button>
+                  </div>
+                </CardWrapper>
+              </motion.div>
+            )}
+          </AnimatePresence>
         )}
       </div>
     </div>

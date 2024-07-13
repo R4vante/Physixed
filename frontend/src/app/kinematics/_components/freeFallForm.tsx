@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 
 const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
   const form = useForm<TFreeFall>({
@@ -30,6 +31,7 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
       height_unit: "m",
       velocity: 0,
       velocity_unit: "m/s",
+      velocity_toggle: false,
     },
   });
 
@@ -121,7 +123,6 @@ const FreeFallForm = ({ onSubmit }: FreeFallFormProps) => {
             name="velocity_unit"
             render={({ field }) => (
               <FormItem className="flex items-end">
-                {/* <FormLabel htmlFor="velocity_unit">Velocity Unit</FormLabel> */}
                 <FormControl>
                   <Controller
                     control={form.control}
