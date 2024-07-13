@@ -9,7 +9,7 @@ const FreeFallContainer = dynamic(
 const FreeFall = () => {
   return (
     <>
-      <section className="flex w-full flex-col py-20 items-center">
+      <section className="flex w-full h-auto flex-col pt-15 mt-[56px] items-center">
         <FreeFallContainer />
       </section>
     </>

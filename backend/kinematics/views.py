@@ -36,9 +36,10 @@ class FreeFallView(APIView):
             ff_model = FreeFall(initial_height=(height, height_unit), initial_velocity=(velocity, velocity_unit))
 
             results = ff_model.solve_eq()
-            plot_dict = make_plot(results["time"], results["height"])
+            height_dict = make_plot(results["time"], results["height"])
+            velocity_dict = make_plot(results["time"], results["velocity"])
             return Response(
-                {"message": "Success", "plot_dict": plot_dict},
+                {"message": "Success", "height_dict": height_dict, "velocity_dict": velocity_dict},
                 status=status.HTTP_200_OK,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
