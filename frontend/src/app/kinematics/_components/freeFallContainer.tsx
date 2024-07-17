@@ -3,18 +3,15 @@ import FreeFallForm from "@/app/kinematics/_components/freeFallForm";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
 import CardWrapper from "@/components/ui/cardWrapper";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import HeightPlot from "@/app/kinematics/_components/heightPlot";
+import Plot from "@/app/kinematics/_components/plot";
 
 const FreeFallContainer = () => {
   const baseUrl = process.env.NEXT_PUBLIC_DJANGO_API_URL;
   const [heightData, setHeightData] = useState<GraphProps | null>(null);
   const [velocityData, setVelocityData] = useState<GraphProps | null>(null);
   const [isVelocity, setIsVelocity] = useState(false);
-  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const handleFormSubmit = async (data: TFreeFall) => {
     try {
@@ -72,7 +69,7 @@ const FreeFallContainer = () => {
           <AnimatePresence mode="wait">
             {isVelocity ? (
               <motion.div
-                key="velocityPlot"
+                key={isVelocity ? "velocity" : "height"}
                 className="mt-4 w-full h-full flex-grow"
                 initial={{ opacity: 0, rotateY: 90 }}
                 animate={{ opacity: 1, rotateY: 0 }}
@@ -81,31 +78,31 @@ const FreeFallContainer = () => {
                   duration: 0.5,
                 }}
               >
-                <CardWrapper className="w-full h-full">
-                  <FreeFallPlot
-                    className="flex justify-center w-full h-full"
-                    data={velocityData.data}
-                    layout={velocityData.layout}
-                  />
-                  <div className="w-full flex justify-end">
-                    <Button
-                      variant="link"
-                      className="text-primary"
-                      onClick={() => setIsVelocity(false)}
-                    >
-                      Plot Height
-                    </Button>
-                  </div>
-                </CardWrapper>
+                <Plot
+                  data={velocityData}
+                  isVelocity={isVelocity}
+                  setIsVelocity={setIsVelocity}
+                  buttonTitle="Plot Velocity"
+                />
               </motion.div>
             ) : (
-              <HeightPlot
-                heightData={heightData}
-                isVelocity={isVelocity}
-                setIsVelocity={setIsVelocity}
-                isFirstRender={isFirstRender}
-                setIsFirstRender={setIsFirstRender}
-              />
+              <motion.div
+                key={isVelocity ? "velocity" : "height"}
+                className="mt-4 w-full h-full flex-grow"
+                initial={{ opacity: 0, rotateY: 90 }}
+                animate={{ opacity: 1, rotateY: 0 }}
+                exit={{ opacity: 0, rotateY: -90 }}
+                transition={{
+                  duration: 0.5,
+                }}
+              >
+                <Plot
+                  data={heightData}
+                  isVelocity={isVelocity}
+                  setIsVelocity={setIsVelocity}
+                  buttonTitle="Plot Velocity"
+                />
+              </motion.div>
             )}
           </AnimatePresence>
         )}
