@@ -1,4 +1,3 @@
-import HeroCards from "@/app/(home)/_components/heroImage";
 import "../index.css";
 import HeroImage from "@/app/(home)/_components/heroImage";
 import { Button } from "@/components/ui/button";

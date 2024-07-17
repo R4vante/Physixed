@@ -1,4 +1,4 @@
-import BenefitCards from "@/app/(home)/_components/ui/BenefitCards";
+import BenefitCards from "@/app/(home)/_components/ui/benefitCards";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import React from "react";
 
