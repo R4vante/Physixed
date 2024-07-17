@@ -1,4 +1,4 @@
-name: Create Release
+name: Bump version
 
 on:
   push:
@@ -6,11 +6,16 @@ on:
       - main
 
 jobs:
-  create-release:
+  bump-version:
+    if: "!startsWith(github.event.head_commit.message, 'bump:')"
     runs-on: ubuntu-latest
+    name: "Bump version and create changelog with commitizen"
     steps:
-      - name: Check out code
+      - name: Check out
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.RELEASE }}"
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -22,43 +27,39 @@ jobs:
         with:
           python-version: "3.9"
 
-      - name: Check for frontend changes
-        id: frontend_changes
+      - name: Check if there are previous commits
+        id: check_commits
         run: |
-          if git diff HEAD~1 | grep -q '^frontend/'; then
-            echo "frontend_changed=true" >> $GITHUB_ENV
+          if [ $(git rev-list --count HEAD) -eq 0 ]; then
+            echo "No previous commits found."
+            echo "skip_diff=true" >> $GITHUB_ENV
           else
-            echo "frontend_changed=false" >> $GITHUB_ENV
-          fi
-
-      - name: Check for backend changes
-        id: backend_changes
-        run: |
-          if git diff HEAD~1 | grep -q '^backend/'; then
-            echo "backend_changed=true" >> $GITHUB_ENV
-          else
-            echo "backend_changed=false" >> $GITHUB_ENV
+            echo "skip_diff=false" >> $GITHUB_ENV
           fi
 
       - name: Bump frontend version and create changelog
-        if: env.frontend_changed == 'true'
+        if: env.skip_diff == 'false'
         run: |
-          cd frontend
-          npx commitizen bump --yes
-          npx commitizen changelog
-          cd ..
+          if git diff --name-only HEAD^ HEAD | grep -q '^frontend/'; then
+            cd frontend
+            npx commitizen bump --yes
+            npx commitizen changelog
+            cd ..
+          fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
 
       - name: Bump backend version and create changelog
-        if: env.backend_changed == 'true'
+        if: env.skip_diff == 'false'
         run: |
-          cd backend
-          cz bump --yes
-          cz changelog
-          cd ..
+          if git diff --name-only HEAD^ HEAD | grep -q '^backend/'; then
+            cd backend
+            cz bump --yes
+            cz changelog
+            cd ..
+          fi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
 
       - name: Commit and push changes
         run: |
@@ -68,13 +69,12 @@ jobs:
           git commit -m "bump: version for frontend and backend"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
 
       - name: Create release
-        if: env.frontend_changed == 'true' || env.backend_changed == 'true'
         uses: softprops/action-gh-release@v1
         with:
           body_path: "frontend/CHANGELOG.md backend/CHANGELOG.md"
           tag_name: ${{ env.REVISION }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE }}
