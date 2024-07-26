@@ -2,6 +2,7 @@ import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
 import { Button } from "@/components/ui/button";
 import CardWrapper from "@/components/ui/cardWrapper";
 import { GraphProps } from "@/lib/types";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 const Plot = ({ data, isVelocity, setIsVelocity, buttonTitle }: PlotProps) => {
   return (
@@ -14,10 +15,13 @@ const Plot = ({ data, isVelocity, setIsVelocity, buttonTitle }: PlotProps) => {
       <div className="w-full flex justify-end">
         <Button
           variant="link"
-          className="text-primary"
+          className="text-primary flex group hover:no-underline"
           onClick={() => setIsVelocity(!isVelocity)}
         >
-          {buttonTitle}
+          <div className="group-hover:-translate-x-1 transition">
+            {buttonTitle}
+          </div>
+          <ArrowRightAltIcon className="justify-self-center group-hover:translate-x-1 transition" />
         </Button>
       </div>
     </CardWrapper>
