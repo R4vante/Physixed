@@ -19,7 +19,7 @@ class FreeFall:
     @property
     def initial_height(self) -> pint.Quantity:
         """Create private height attribute."""
-        return self.initial_height
+        return self._initial_height
 
     @initial_height.setter
     def initial_height(self, value: tuple) -> None:
@@ -34,12 +34,12 @@ class FreeFall:
         """
         if value[0] < 0:
             raise NegativeValueError("Height cannot be smaller than 0.")
-        self.initial_height = value_parse_unit(value)
+        self._initial_height = value_parse_unit(value)
 
     @property
     def initial_velocity(self) -> pint.Quantity:
         """Create private velocity attribute."""
-        return self.initial_velocity
+        return self._initial_velocity
 
     @initial_velocity.setter
     def initial_velocity(self, value: tuple) -> None:
@@ -54,7 +54,7 @@ class FreeFall:
         """
         if value[0] < 0:
             raise NegativeValueError("Velocity cannot be smaller than 0.")
-        self.initial_velocity = value_parse_unit(value)
+        self._initial_velocity = value_parse_unit(value)
 
     def solve_endtime(self) -> pint.Quantity:
         """Calculate time till object hits the ground.
