@@ -2,7 +2,7 @@ import pytest
 from pint import Quantity
 
 from base.pytools.exceptions import NegativeValueError
-from kinematics.pytools.utils import FreeFall
+from kinematics.pytools.free_fall import FreeFall
 
 
 @pytest.fixture()
