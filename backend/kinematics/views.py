@@ -3,9 +3,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .pytools.lineplot import make_plot
-from .pytools.utils import FreeFall
-from .serializers import FreeFallSerializer
+from kinematics.pytools.free_fall import FreeFall
+from kinematics.pytools.lineplot import make_plot
+from kinematics.serializers import FreeFallSerializer
 
 
 class FreeFallView(APIView):

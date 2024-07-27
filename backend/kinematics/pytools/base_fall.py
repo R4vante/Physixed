@@ -1,12 +1,25 @@
-import numpy as np
+from abc import ABC, abstractmethod
+
 import pint
 
 from base.pytools.exceptions import NegativeValueError
 from base.pytools.utils import value_parse_unit
 
 
-class FreeFall:
-    """Physical model to simulate free fall motion."""
+class BaseFall(ABC):
+    """Base class for falling motion.
+
+    Attributes
+        initial_height (tuple): initial height of the object
+        initial_velocity (tuple): initial velocity of the object
+        time_discretization_step (tuple): time step for the simulation
+        g (pint.Quantity): acceleration due to gravity
+
+    Methods
+        solve_end_time: calculate the time till an object hits the ground
+        solve_eq: calculate the height and velocity for every time step
+
+    """
 
     def __init__(
         self, initial_height: tuple, initial_velocity: tuple, time_discretization_step: tuple | None = (0.01, "s")
@@ -56,17 +69,17 @@ class FreeFall:
             raise NegativeValueError("Velocity cannot be smaller than 0.")
         self._initial_velocity = value_parse_unit(value)
 
+    @abstractmethod
     def solve_endtime(self) -> pint.Quantity:
-        """Calculate time till object hits the ground.
+        """Calculate the time till an object hits the ground.
 
         Returns
-            pint.Quantity: time till the object hits the ground.
+            pint.Quantity: _time till the object hits the ground.
 
         """
-        return -self.initial_velocity.to_base_units() / self.g + np.sqrt(
-            self.initial_velocity.to_base_units() ** 2 / self.g**2 + 2 * self.initial_height.to_base_units() / self.g
-        )
+        ...
 
+    @abstractmethod
     def solve_eq(self) -> dict:
         """Calculate the height and velocity for every time step.
 
@@ -74,17 +87,4 @@ class FreeFall:
             dict: resulting values for height, velocity and time for every time step.
 
         """
-        end_time = self.solve_endtime()
-        time = value_parse_unit((np.arange(0, end_time.magnitude, self.time_discretization_step.magnitude), "s"))
-        height = (
-            self.initial_height.to_base_units()
-            - self.initial_velocity.to_base_units() * time.to_base_units()
-            - 0.5 * self.g * time**2
-        )
-        velocity = self.initial_velocity.to_base_units() + self.g * time.to_base_units()
-
-        return {
-            "height": height.to(self.initial_height.u),
-            "velocity": velocity.to(self.initial_velocity.u),
-            "time": time,
-        }
+        ...
