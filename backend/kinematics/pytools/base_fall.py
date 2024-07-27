@@ -70,16 +70,6 @@ class BaseFall(ABC):
         self._initial_velocity = value_parse_unit(value)
 
     @abstractmethod
-    def solve_endtime(self) -> pint.Quantity:
-        """Calculate the time till an object hits the ground.
-
-        Returns
-            pint.Quantity: _time till the object hits the ground.
-
-        """
-        ...
-
-    @abstractmethod
     def solve_eq(self) -> dict:
         """Calculate the height and velocity for every time step.
 
