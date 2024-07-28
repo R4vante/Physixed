@@ -1,4 +1,4 @@
-class NegativeValueError(Exception):
+class InvalidValueError(Exception):
     """Raise error if number is smaller than 0."""
 
     def __init__(self, message: str | None = "Number cannot be smaller than 0"):

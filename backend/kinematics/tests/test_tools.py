@@ -1,7 +1,7 @@
 import pytest
 from pint import Quantity
 
-from base.pytools.exceptions import NegativeValueError
+from base.pytools.exceptions import InvalidValueError
 from kinematics.pytools.free_fall import FreeFall
 
 
@@ -48,7 +48,7 @@ class TestFreeFallSad:
     def test_solve_endtime(self) -> None:
         """Test errorhandling initializiation of the free fall instance."""
 
-        with pytest.raises(NegativeValueError) as e:
+        with pytest.raises(InvalidValueError) as e:
             FreeFall((-10, "m"), (10, "m/s"))
 
         assert str(e.value) == "Height cannot be smaller than 0."

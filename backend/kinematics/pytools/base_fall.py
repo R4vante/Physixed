@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import pint
 
-from base.pytools.exceptions import InvalidTypeError, NegativeValueError
+from base.pytools.exceptions import InvalidTypeError, InvalidValueError
 from base.pytools.utils import value_parse_unit
 
 
@@ -29,14 +29,14 @@ class BaseFall(ABC):
         if not initial_height:
             raise InvalidTypeError("Initial height must have a value.")
         if initial_height[0] < 0:
-            raise NegativeValueError("Height cannot be smaller than 0.")
+            raise InvalidValueError("Height cannot be smaller than 0.")
 
         if not isinstance(initial_velocity, tuple):
             raise InvalidTypeError("Initial velocity must be a tuple of magnitude and unit.")
         if not initial_velocity:
             raise InvalidTypeError("Initial velocity must have a value.")
         if initial_velocity[0] < 0:
-            raise NegativeValueError("Velocity cannot be smaller than 0.")
+            raise InvalidValueError("Velocity cannot be smaller than 0.")
 
         self.initial_height = initial_height
         self.initial_velocity = initial_velocity
@@ -56,7 +56,7 @@ class BaseFall(ABC):
             value (tuple): tuple of height value and unit
 
         Raises:
-            NegativeValueError: if height value is smaller than 0
+            InvalidValueError: if height value is smaller than 0
 
         """
 
@@ -75,7 +75,7 @@ class BaseFall(ABC):
             value (tuple): tuple of velocity value and unit
 
         Raises:
-            NegativeValueError: if velocity value is smaller than 0
+            InvalidValueError: if velocity value is smaller than 0
 
         """
 
