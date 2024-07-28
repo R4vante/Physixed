@@ -57,8 +57,8 @@ class AirResFall(BaseFall):
         super().__init__(initial_height, initial_velocity)
 
         self.mass = mass
-        self.Cd = drag_coefficient
-        self.A = area
+        self.drag_coefficient = drag_coefficient
+        self.area = area
         self.rho = rho
 
     @property
@@ -90,7 +90,7 @@ class AirResFall(BaseFall):
             pint.Quantity: Drag coefficient of the object.
 
         """
-        return self._Cd
+        return self._drag_coefficient
 
     @drag_coefficient.setter
     def drag_coefficient(self, value: tuple) -> None:
@@ -101,7 +101,7 @@ class AirResFall(BaseFall):
         if value[0] < 0:
             raise InvalidValueError("Drag coefficient must be greater than 0.")
 
-        self._Cd = value_parse_unit(value)
+        self._drag_coefficient = value_parse_unit(value)
 
     @property
     def area(self) -> pint.Quantity:
@@ -111,7 +111,7 @@ class AirResFall(BaseFall):
             pint.Quantity: Area of the object.
 
         """
-        return self._A
+        return self._area
 
     @area.setter
     def area(self, value: tuple) -> None:
@@ -122,7 +122,7 @@ class AirResFall(BaseFall):
         if value[0] <= 0:
             raise InvalidValueError("Area must be greater than 0.")
 
-        self._A = value_parse_unit(value)
+        self._area = value_parse_unit(value)
 
     @property
     def rho(self) -> pint.Quantity:
@@ -155,7 +155,7 @@ class AirResFall(BaseFall):
         """
         v = y[1]
         dydt = v
-        drag = 0.5 * self._rho.m_as("kg/m^3") * self._Cd.m * self._A.m_as("m^2") * v**2 * np.sign(v)
+        drag = 0.5 * self._rho.m_as("kg/m^3") * self._drag_coefficient.m * self._area.m_as("m^2") * v**2 * np.sign(v)
         dvdt = -self.g.m_as("m/s^2") - drag / self._mass.m_as("kg")
         return [dydt, dvdt]
 
