@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from base.pytools.exceptions import InvalidTypeError, NegativeValueError
+from base.pytools.exceptions import InvalidTypeError, InvalidValueError
 from kinematics.pytools.air_res import AirResFall
 
 
@@ -32,8 +32,6 @@ class TestHappyPath:
 
         model = AirResFall(initial_height, initial_velocity, mass, drag_coefficient, area, rho)
 
-        assert model._initial_height.m_as("m") == 100
-        assert model._initial_velocity.m_as("m/s") == 0
         assert model.mass.m_as("kg") == 1
         assert model.Cd.m_as("") == 0.47
         assert model.A.m_as("m**2") == 1
@@ -116,69 +114,110 @@ class TestSadPath:
     """Test the error handling of the air resistance model."""
 
     @pytest.mark.parametrize(
-        ("height", "velocity", "expected_message"),
+        ("mass", "drag_coefficient", "area", "density", "expected_message"),
         [
-            (None, (10, "m/s"), "Initial height must be a tuple of magnitude and unit."),
-            (100, (10, "m/s"), "Initial height must be a tuple of magnitude and unit."),
-            ("100", (10, "m/s"), "Initial height must be a tuple of magnitude and unit."),
-            ((100, "m"), None, "Initial velocity must be a tuple of magnitude and unit."),
-            ((100, "m"), 100, "Initial velocity must be a tuple of magnitude and unit."),
-            ((100, "m"), "100", "Initial velocity must be a tuple of magnitude and unit."),
+            (
+                None,
+                (0.47, ""),
+                (1, "m**2"),
+                (1.1227, "kg/m**3"),
+                "Mass must be a tuple of magnitude and unit.",
+            ),
+            (
+                (10, "kg"),
+                0.47,
+                (1, "m**2"),
+                (1.1227, "kg/m**3"),
+                "Drag coefficient must be a tuple of magnitude and unit.",
+            ),
+            (
+                (10, "kg"),
+                (0.47, ""),
+                "1 m**2",
+                (1.1227, "kg/m**3"),
+                "Area must be a tuple of magnitude and unit.",
+            ),
+            (
+                (10, "kg"),
+                (0.47, ""),
+                (1, "m**2"),
+                None,
+                "Density must be a tuple of magnitude and unit.",
+            ),
         ],
     )
     def test_is_tuple_exception(
-        self, height: float | str | None, velocity: float | str | None, expected_message: str
+        self,
+        mass: float | str | None,
+        drag_coefficient: float | str | None,
+        area: float | str | None,
+        density: float | str | None,
+        expected_message: str,
     ) -> None:
         """Test exception when height or velocity are not tuples.
 
         Args:
-            height (float | str | None): Value for initial height
-            velocity (float | str | None): Value for initial velocity
-            expected_message (str): Error message
+            mass (float | str | None): Value for mass.
+            drag_coefficient (float | str | None): Value for drag coefficient.
+            area (float | str | None): Value for area.
+            density (float | str | None): Value for density.
+            expected_message (str): Error message.
 
         """
         with pytest.raises(InvalidTypeError) as e:
             # ignore type because we are testing invalid types
-            AirResFall(height, velocity, (1, "kg"), (0.47, ""), (1, "m**2"), (1.225, "kg/m**3"))  # type: ignore[arg-type]
+            AirResFall((10, "m"), (0, "m/s"), mass=mass, drag_coefficient=drag_coefficient, area=area, rho=density)  # type: ignore[arg-type]
         assert e.value.message == expected_message
 
     @pytest.mark.parametrize(
-        ("height", "velocity", "expected_message"),
+        ("mass", "drag_coefficient", "area", "density", "expected_message"),
         [
-            ((), (10, "m/s"), "Initial height must have a value."),
-            ((100, "m"), (), "Initial velocity must have a value."),
+            ((), (0.47, ""), (1, "m**2"), (1.1227, "kg/m**3"), "Mass cannot be empty."),
+            ((10, "kg"), (), (1, "m**2"), (1.1227, "kg/m**3"), "Drag coefficient cannot be empty."),
+            ((10, "kg"), (0.47, ""), (), (1.1227, "kg/m**3"), "Area cannot be empty."),
+            ((10, "kg"), (0.47, ""), (1, "m**2"), (), "Density cannot be empty."),
         ],
     )
-    def test_is_empty_exception(self, height: tuple, velocity: tuple, expected_message: str) -> None:
+    def test_is_empty_exception(
+        self, mass: tuple, drag_coefficient: tuple, area: tuple, density: tuple, expected_message: str
+    ) -> None:
         """Test if exception is raised when height or velocity are empty.
 
         Args:
-            height (tuple): Initial height
-            velocity (tuple): Initial velocity
-            expected_message (str): error message
-
-        """
-
-        with pytest.raises(InvalidTypeError) as e:
-            AirResFall(height, velocity, (1, "kg"), (0.47, ""), (1, "m**2"), (1.225, "kg/m**3"))
-        assert e.value.message == expected_message
-
-    @pytest.mark.parametrize(
-        ("height", "velocity", "expected_message"),
-        [
-            ((-100, "m"), (10, "m/s"), "Height cannot be smaller than 0."),
-            ((100, "m"), (-10, "m/s"), "Velocity cannot be smaller than 0."),
-        ],
-    )
-    def test_is_negative(self, height: tuple, velocity: tuple, expected_message: str) -> None:
-        """Test exception when height or velocity are negative.
-
-        Args:
-            height (tuple): Initial height
-            velocity (tuple): Initial velocity
+            mass (tuple): Mass of the object
+            drag_coefficient (tuple): Drag coefficient of the object
+            area (tuple): Area of the object
+            density (tuple): Density of the medium
             expected_message (str): Error message
 
         """
-        with pytest.raises(NegativeValueError) as e:
-            AirResFall(height, velocity, (1, "kg"), (0.47, ""), (1, "m**2"), (1.225, "kg/m**3"))
+
+        with pytest.raises(InvalidValueError) as e:
+            AirResFall((10, "m"), (0, "m/s"), mass, drag_coefficient, area, density)
+        assert e.value.message == expected_message
+
+    @pytest.mark.parametrize(
+        ("mass", "drag_coefficient", "area", "density", "expected_message"),
+        [
+            ((-10, "kg"), (0.47, ""), (1, "m**2"), (1.1227, "kg/m**3"), "Mass must be greater than 0."),
+            ((10, "kg"), (-0.47, ""), (1, "m**2"), (1.1227, "kg/m**3"), "Drag coefficient must be greater than 0."),
+            ((10, "kg"), (0.47, ""), (-1, "m**2"), (1.1227, "kg/m**3"), "Area must be greater than 0."),
+            ((10, "kg"), (0.47, ""), (1, "m**2"), (-1.1227, "kg/m**3"), "Density must be greater than 0."),
+        ],
+    )
+    def test_is_negative(
+        self, mass: tuple, drag_coefficient: tuple, area: tuple, density: tuple, expected_message: str
+    ) -> None:
+        """Test exception when height or velocity are negative.
+
+        Args:
+            mass (tuple): Mass of the object
+            drag_coefficient (tuple): Drag coefficient of the object
+            area (tuple): Area of the object
+            density (tuple): Density of the medium
+            expected_message (str): Error message
+
+        """
+        with pytest.raises(InvalidValueError) as e:
+            AirResFall((10, "m"), (0, "m/s"), mass, drag_coefficient, area, density)
         assert e.value.message == expected_message
