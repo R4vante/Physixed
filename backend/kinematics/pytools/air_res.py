@@ -85,10 +85,12 @@ class AirResFall(BaseFall):
 
         """
         initial_conditions = [self._initial_height.m_as("m"), self._initial_velocity.m_as("m/s")]
-        time_span = (0, 1000)
-        time_points = np.arange(time_span[0], time_span[1], self.time_discretization_step.m_as("s"))
+        time_span = (0, 1e6)
+        # time_points = np.arange(time_span[0], time_span[1], self.time_discretization_step.m_as("s"))
 
-        sol = solve_ivp(self._equations, time_span, initial_conditions, t_eval=time_points, events=self._hit_ground)
+        sol = solve_ivp(
+            self._equations, time_span, initial_conditions, events=self._hit_ground, rtol=1e-8, atol=1e-11, max_step=0.1
+        )
 
         height = value_parse_unit((sol.y[0], "m"))
         time = value_parse_unit((sol.t, "s"))
