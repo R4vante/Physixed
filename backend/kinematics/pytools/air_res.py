@@ -177,8 +177,6 @@ class AirResFall(BaseFall):
         time_span = (0, 1e6)
 
         sol = solve_ivp(
-
-        sol = solve_ivp(
             self._equations, time_span, initial_conditions, events=self._hit_ground, rtol=1e-8, atol=1e-11, max_step=0.1
         )
 
