@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import pint
 
-from base.pytools.exceptions import NegativeValueError
+from base.pytools.exceptions import InvalidTypeError, NegativeValueError
 from base.pytools.utils import value_parse_unit
 
 
@@ -24,6 +24,20 @@ class BaseFall(ABC):
     def __init__(
         self, initial_height: tuple, initial_velocity: tuple, time_discretization_step: tuple | None = (0.01, "s")
     ):
+        if not isinstance(initial_height, tuple):
+            raise InvalidTypeError("Initial height must be a tuple of magnitude and unit.")
+        if not initial_height:
+            raise InvalidTypeError("Initial height must have a value.")
+        if initial_height[0] < 0:
+            raise NegativeValueError("Height cannot be smaller than 0.")
+
+        if not isinstance(initial_velocity, tuple):
+            raise InvalidTypeError("Initial velocity must be a tuple of magnitude and unit.")
+        if not initial_velocity:
+            raise InvalidTypeError("Initial velocity must have a value.")
+        if initial_velocity[0] < 0:
+            raise NegativeValueError("Velocity cannot be smaller than 0.")
+
         self.initial_height = initial_height
         self.initial_velocity = initial_velocity
         self.time_discretization_step = value_parse_unit(time_discretization_step)
@@ -45,8 +59,7 @@ class BaseFall(ABC):
             NegativeValueError: if height value is smaller than 0
 
         """
-        if value[0] < 0:
-            raise NegativeValueError("Height cannot be smaller than 0.")
+
         self._initial_height = value_parse_unit(value)
 
     @property
@@ -65,8 +78,7 @@ class BaseFall(ABC):
             NegativeValueError: if velocity value is smaller than 0
 
         """
-        if value[0] < 0:
-            raise NegativeValueError("Velocity cannot be smaller than 0.")
+
         self._initial_velocity = value_parse_unit(value)
 
     @abstractmethod
@@ -77,4 +89,3 @@ class BaseFall(ABC):
             dict: resulting values for height, velocity and time for every time step.
 
         """
-        ...
