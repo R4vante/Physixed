@@ -81,3 +81,31 @@ class TestHappyPath:
         assert results["time"][-1] > 0
         assert len(results["velocity"]) == len(results["time"])
         assert len(results["height"]) == len(results["time"])
+
+    @pytest.mark.parametrize(
+        ("height", "velocity", "mass", "drag_coefficient", "area", "rho"),
+        [
+            ((0, "m"), (10, "m/s"), (1, "kg"), (0.47, ""), (1, "m**2"), (1.225, "kg/m**3")),
+            ((100, "m"), (0, "m/s"), (1, "kg"), (0.47, ""), (1, "m**2"), (1.225, "kg/m**3")),
+            ((100, "m"), (0, "m/s"), (10000, "kg"), (2.0, ""), (10000, "m**2"), (100, "kg/m**3")),
+        ],
+    )
+    def test_edge_cases(
+        self, height: tuple, velocity: tuple, mass: tuple, drag_coefficient: tuple, area: tuple, rho: tuple
+    ) -> None:
+        """Test edge cases for the air resistance model.
+
+        Args:
+            height (tuple): height of the object
+            velocity (tuple): velocity of the object
+            mass (tuple): mass of the object
+            drag_coefficient (tuple): drag coefficient of the object
+            area (tuple): frontal area of the object
+            rho (tuple): density of the medium
+
+        """
+        results = AirResFall(height, velocity, mass, drag_coefficient, area, rho).solve_eq()
+        assert results["height"][-1] == pytest.approx(0, abs=1e-2)
+        assert results["time"][-1] > 0
+        assert len(results["velocity"]) == len(results["time"])
+        assert len(results["height"]) == len(results["time"])
