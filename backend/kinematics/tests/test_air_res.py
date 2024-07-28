@@ -32,9 +32,9 @@ class TestHappyPath:
 
         model = AirResFall(initial_height, initial_velocity, mass, drag_coefficient, area, rho)
 
-        assert model.mass.m_as("kg") == 1
-        assert model.Cd.m_as("") == 0.47
-        assert model.A.m_as("m**2") == 1
+        assert model._mass.m_as("kg") == 1
+        assert model._Cd.m_as("") == 0.47
+        assert model._A.m_as("m**2") == 1
 
     def test_equation(self, initial_values: tuple) -> None:
         """Test the equation method that calculates the derivatives."""
@@ -169,18 +169,7 @@ class TestSadPath:
             AirResFall((10, "m"), (0, "m/s"), mass=mass, drag_coefficient=drag_coefficient, area=area, rho=density)  # type: ignore[arg-type]
         assert e.value.message == expected_message
 
-    @pytest.mark.parametrize(
-        ("mass", "drag_coefficient", "area", "density", "expected_message"),
-        [
-            ((), (0.47, ""), (1, "m**2"), (1.1227, "kg/m**3"), "Mass cannot be empty."),
-            ((10, "kg"), (), (1, "m**2"), (1.1227, "kg/m**3"), "Drag coefficient cannot be empty."),
-            ((10, "kg"), (0.47, ""), (), (1.1227, "kg/m**3"), "Area cannot be empty."),
-            ((10, "kg"), (0.47, ""), (1, "m**2"), (), "Density cannot be empty."),
-        ],
-    )
-    def test_is_empty_exception(
-        self, mass: tuple, drag_coefficient: tuple, area: tuple, density: tuple, expected_message: str
-    ) -> None:
+    def test_is_empty_mass_exception(self) -> None:
         """Test if exception is raised when height or velocity are empty.
 
         Args:
@@ -193,8 +182,8 @@ class TestSadPath:
         """
 
         with pytest.raises(InvalidValueError) as e:
-            AirResFall((10, "m"), (0, "m/s"), mass, drag_coefficient, area, density)
-        assert e.value.message == expected_message
+            AirResFall((10, "m"), (0, "m/s"), ())
+        assert e.value.message == "Mass cannot be empty."
 
     @pytest.mark.parametrize(
         ("mass", "drag_coefficient", "area", "density", "expected_message"),

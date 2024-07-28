@@ -1,9 +1,11 @@
 from collections.abc import Callable
 
 import numpy as np
+import pint
 from numpy.typing import NDArray
 from scipy.integrate import solve_ivp
 
+from base.pytools.exceptions import InvalidTypeError, InvalidValueError
 from base.pytools.utils import value_parse_unit
 from kinematics.pytools.base_fall import BaseFall
 
@@ -53,10 +55,95 @@ class AirResFall(BaseFall):
 
         """
         super().__init__(initial_height, initial_velocity)
-        self.mass = value_parse_unit(mass)
-        self.Cd = value_parse_unit(drag_coefficient)
-        self.A = value_parse_unit(area)
-        self.rho = value_parse_unit(rho)
+
+        self.mass = mass
+        self.Cd = drag_coefficient
+        self.A = area
+        self.rho = rho
+
+    @property
+    def mass(self) -> pint.Quantity:
+        """Create private mass attribute.
+
+        Returns
+            pint.Quantity: Mass of the object.
+
+        """
+        return self._mass
+
+    @mass.setter
+    def mass(self, value: tuple) -> None:
+        if not isinstance(value, tuple):
+            raise InvalidTypeError("Mass must be a tuple of magnitude and unit.")
+        if not value:
+            raise InvalidValueError("Mass cannot be empty.")
+        if value[0] <= 0:
+            raise InvalidValueError("Mass must be greater than 0.")
+
+        self._mass = value_parse_unit(value)
+
+    @property
+    def drag_coefficient(self) -> pint.Quantity:
+        """Create private drag coefficient attribute.
+
+        Returns
+            pint.Quantity: Drag coefficient of the object.
+
+        """
+        return self._Cd
+
+    @drag_coefficient.setter
+    def drag_coefficient(self, value: tuple) -> None:
+        if not isinstance(value, tuple):
+            raise InvalidTypeError("Drag coefficient must be a tuple of magnitude and unit.")
+        if not value:
+            raise InvalidValueError("Drag coefficient cannot be empty.")
+        if value[0] < 0:
+            raise InvalidValueError("Drag coefficient must be greater than 0.")
+
+        self._Cd = value_parse_unit(value)
+
+    @property
+    def area(self) -> pint.Quantity:
+        """Create private area attribute.
+
+        Returns
+            pint.Quantity: Area of the object.
+
+        """
+        return self._A
+
+    @area.setter
+    def area(self, value: tuple) -> None:
+        if not isinstance(value, tuple):
+            raise InvalidTypeError("Area must be a tuple of magnitude and unit.")
+        if not value:
+            raise InvalidValueError("Area cannot be empty.")
+        if value[0] <= 0:
+            raise InvalidValueError("Area must be greater than 0.")
+
+        self._A = value_parse_unit(value)
+
+    @property
+    def rho(self) -> pint.Quantity:
+        """Create private density attribute.
+
+        Returns
+            pint.Quantity: Density of the medium.
+
+        """
+        return self._rho
+
+    @rho.setter
+    def rho(self, value: tuple) -> None:
+        if not isinstance(value, tuple):
+            raise InvalidTypeError("Density must be a tuple of magnitude and unit.")
+        if not value:
+            raise InvalidValueError("Density cannot be empty.")
+        if value[0] <= 0:
+            raise InvalidValueError("Density must be greater than 0.")
+
+        self._rho = value_parse_unit(value)
 
     def _equations(self, _t: NDArray, y: NDArray) -> list:
         """Equations of motions for solving free fall model.
@@ -68,8 +155,8 @@ class AirResFall(BaseFall):
         """
         v = y[1]
         dydt = v
-        drag = 0.5 * self.rho.m_as("kg/m^3") * self.Cd.m * self.A.m_as("m^2") * v**2 * np.sign(v)
-        dvdt = -self.g.m_as("m/s^2") - drag / self.mass.m_as("kg")
+        drag = 0.5 * self._rho.m_as("kg/m^3") * self._Cd.m * self._A.m_as("m^2") * v**2 * np.sign(v)
+        dvdt = -self.g.m_as("m/s^2") - drag / self._mass.m_as("kg")
         return [dydt, dvdt]
 
     @event_decorator(terminal=True, direction=-1)
