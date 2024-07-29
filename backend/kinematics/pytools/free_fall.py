@@ -44,7 +44,6 @@ class FreeFall(BaseFall):
             velocities.append(next_velocity)
 
             current_time, current_height, current_velocity = self.update_state(next_time, next_height, next_velocity)
-            # print(current_height)
 
         return self.convert_to_pint_quantities(time_steps, heights, velocities)
 
