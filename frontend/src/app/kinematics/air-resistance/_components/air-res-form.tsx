@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { TAirResistance } from "@/lib/types";
+import { airResistanceSchema, TAirResistance } from "@/lib/types";
 import { Controller, useForm, FieldErrors } from "react-hook-form";
 import { inputParameters } from "@/lib/data";
 import {
@@ -19,12 +19,31 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 
-const AirResForm = () => {
-  const form = useForm<TAirResistance>();
+const AirResForm = ({ onSubmit }: AirResFormProps) => {
+  const form = useForm<TAirResistance>({
+    resolver: zodResolver(airResistanceSchema),
+    defaultValues: {
+      height: 10,
+      height_unit: "m",
+      velocity: 0,
+      velocity_unit: "m/s",
+      mass: 1,
+      mass_unit: "kg",
+      drag_coefficient: 0.47,
+      area: 1,
+      area_unit: "m^2",
+    },
+  });
+
   return (
     <Form {...form}>
-      <form className="flex flex-col space-y-6">
+      <form
+        className="flex flex-col space-y-6"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         {inputParameters.map((input) => (
           <div
             key={input.name}
@@ -99,9 +118,16 @@ const AirResForm = () => {
             )}
           </div>
         ))}
+        <Button variant="default" type="submit">
+          Submit
+        </Button>
       </form>
     </Form>
   );
 };
 
 export default AirResForm;
+
+type AirResFormProps = {
+  onSubmit: (data: TAirResistance) => void;
+};
