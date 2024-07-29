@@ -1,4 +1,4 @@
-import FreeFallPlot from "@/app/kinematics/_components/freeFallPlot";
+import FreeFallPlot from "@/app/kinematics/freefall/_components/freeFallPlot";
 import { Button } from "@/components/ui/button";
 import CardWrapper from "@/components/ui/cardWrapper";
 import { GraphProps } from "@/lib/types";
