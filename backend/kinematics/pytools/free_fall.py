@@ -5,6 +5,8 @@ from numpy.typing import NDArray
 from base.pytools.utils import value_parse_unit
 from kinematics.pytools.base_fall import BaseFall
 
+GROUND_PROXIMITY_THRESHOLD = 1e-6
+
 
 class FreeFall(BaseFall):
     """Physical model to simulate free fall motion."""
@@ -34,7 +36,7 @@ class FreeFall(BaseFall):
         current_height = self._initial_height.to_base_units().magnitude
         current_velocity = self._initial_velocity.to_base_units().magnitude
 
-        while current_height > 1e-6:
+        while current_height > GROUND_PROXIMITY_THRESHOLD:
             _next_time_step, next_time, next_height, next_velocity = self.calculate_next_step(
                 current_time, current_height, current_velocity, end_time
             )
@@ -121,7 +123,7 @@ class FreeFall(BaseFall):
             tuple: time step, time, height and velocity of the next iteration.
 
         """
-        if new_height <= 1e-6:
+        if new_height <= GROUND_PROXIMITY_THRESHOLD:
             next_time_step = (
                 -current_velocity + np.sqrt(current_velocity**2 + 2 * self.g.magnitude * current_height)
             ) / self.g.magnitude
