@@ -1,11 +1,11 @@
 "use client";
-import FreeFallForm from "@/app/kinematics/_components/freeFallForm";
+import FreeFallForm from "@/app/kinematics/freefall/_components/freeFallForm";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import CardWrapper from "@/components/ui/cardWrapper";
 import toast from "react-hot-toast";
-import Plot from "@/app/kinematics/_components/plot";
+import Plot from "@/app/kinematics/freefall/_components/plot";
 
 const FreeFallContainer = () => {
   const baseUrl = process.env.NEXT_PUBLIC_DJANGO_API_URL;
