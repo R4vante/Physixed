@@ -8,3 +8,38 @@ export const links = [
         path: "/kinematics"
     }
 ]
+
+export const inputParameters = [
+    {
+        name: "height",
+        label: "Initial Height",
+        unitName: "height_unit",
+        unitOptions: ["m", "km"]
+    },
+
+    {
+        name: "velocity",
+        label: "Initial Velocity",
+        unitName: "velocity_unit",
+        unitOptions: ["m/s", "km/h"]
+    },
+
+    {
+        name: "mass",
+        label: "Mass",
+        unitName: "mass_unit",
+        unitOptions: ["kg"]
+    },
+
+    {
+        name: "drag_coefficient",
+        label: "Drag Coefficient",
+    },
+
+    {
+        name: "area",
+        label: "Area",
+        unitName: "area_unit",
+        unitOptions: ["m^2"]
+    }
+]
