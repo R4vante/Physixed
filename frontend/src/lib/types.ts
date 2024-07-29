@@ -24,6 +24,26 @@ export const freeFallSchema = z.object({
 
 export type TFreeFall = z.infer<typeof freeFallSchema>;
 
+export const airResistanceSchema = freeFallSchema.extend({
+  mass: z.coerce.number().min(1, {
+    message: "Mass must be greater than 0."
+  }),
+  mass_unit: z.enum(["g", "kg"]),
+  drag_coefficient: z.coerce.number().min(0, {
+    message: "Drag coefficient must be greater than or equal to 0."
+  }),
+  area: z.coerce.number().min(0, {
+    message: "Area must be greater than or equal to 0."
+  }),
+  area_unit: z.enum(["cm^2", "m^2"]),
+  density: z.coerce.number().min(0, {
+    message: "Density must be greater than or equal to 0."
+  }),
+  density_unit: z.enum(["kg/m^3", "g/cm^3"]),
+});
+
+export type TAirResistance = z.infer<typeof airResistanceSchema>;
+
 export const contactSchema = z.object({
   name: z.string({
     message: "First name is required."
@@ -36,4 +56,4 @@ export const contactSchema = z.object({
   })
   })
 
-  export type TContact = z.infer<typeof contactSchema>;
+export type TContact = z.infer<typeof contactSchema>;
