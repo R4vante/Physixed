@@ -27,10 +27,12 @@ class AirResistanceSerializer(serializers.Serializer):
     height_unit = serializers.ChoiceField(choices=[("m", "m"), ("km", "km")])
     velocity = serializers.FloatField()
     velocity_unit = serializers.ChoiceField(choices=[("m/s", "m/s"), ("km/h", "km/h")])
-    drag_coefficient = serializers.FloatField()
-    cross_sectional_area = serializers.FloatField()
-    cross_sectional_area_unit = serializers.ChoiceField(choices=[("m^2", "m^2"), ("cm^2", "cm^2")])
     mass = serializers.FloatField()
     mass_unit = serializers.ChoiceField(choices=[("kg", "kg"), ("g", "g")])
-    time = serializers.FloatField()
-    time_unit = serializers.ChoiceField(choices=[("s", "s"), ("min", "min")])
+    drag_coefficient = serializers.FloatField(required=False, default=0.47)
+    area = serializers.FloatField(required=False, default=1)
+    area_unit = serializers.ChoiceField(choices=[("m^2", "m^2"), ("cm^2", "cm^2")], required=False, default="m^2")
+    density = serializers.FloatField(required=False, default=1.227)
+    density_unit = serializers.ChoiceField(
+        choices=[("kg/m^3", "kg/m^3"), ("g/m^3", "g/m^3")], required=False, default="kg/m^3"
+    )
