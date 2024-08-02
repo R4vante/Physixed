@@ -58,8 +58,8 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
             <FormLabel
               className={`font-bold text-xl ${
                 form.formState.errors[input.name as keyof TAirResistance]
-                  ? "text-error"
-                  : "text-label"
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-inherit dark:text-inherit"
               }`}
               htmlFor={input.name}
             >
