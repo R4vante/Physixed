@@ -1,15 +1,19 @@
 "use client";
 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import AirResForm from "@/app/kinematics/air-resistance/_components/air-res-form";
 import CardWrapper from "@/components/ui/cardWrapper";
 import { GraphProps, TAirResistance } from "@/lib/types";
-import React, { useState } from "react";
 import { fetchData } from "@/lib/helpers";
+import PlotContainer from "@/app/kinematics/_components/plot-container";
 
 const AirResContainer = () => {
   const baseURL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
   const [heightData, setHeightData] = useState<GraphProps | null>(null);
   const [velocityData, setVelocityData] = useState<GraphProps | null>(null);
+  const [isVelocity, setIsVelocity] = useState(false);
+
   const handleFormSubmit = async (data: TAirResistance) => {
     const result = await fetchData(
       data,
@@ -36,6 +40,26 @@ const AirResContainer = () => {
       >
         <AirResForm onSubmit={handleFormSubmit} />
       </CardWrapper>
+
+      <div className="flex flex-col items-center w-full lg:w-1/2">
+        {heightData && velocityData && (
+          <motion.div
+            className="mt-4 w-full h-full flex-grow"
+            initial={{ opacity: 0, rotateY: 90 }}
+            animate={{ opacity: 1, rotateY: 0 }}
+            transition={{
+              duration: 0.5,
+            }}
+          >
+            <PlotContainer
+              data={isVelocity ? velocityData : heightData}
+              isVelocity={isVelocity}
+              setIsVelocity={setIsVelocity}
+              buttonTitle="Plot Velocity"
+            />
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
