@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  TAirResistance,
-  TFreeFall,
-  airResistanceSchema,
-  freeFallSchema,
-} from "@/lib/types";
+import { TAirResistance, airResistanceSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -27,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { inputParameters } from "@/lib/data";
+
 const AirResForm = ({ onSubmit }: AirResFormProps) => {
   const form = useForm<TAirResistance>({
     resolver: zodResolver(airResistanceSchema),
@@ -42,9 +38,10 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
       area_unit: "m^2",
       density: 1.225,
       density_unit: "kg/m^3",
-
       velocity_toggle: false,
     },
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
 
   return (
@@ -54,38 +51,46 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
         className="flex flex-col space-y-6"
       >
         {inputParameters.map((input) => (
-          <div className="flex space-x-4" key={input.name}>
-            <FormField
-              control={form.control}
-              name={input.name as keyof TAirResistance}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-bold text-xl" htmlFor="height">
-                    {input.label}
-                  </FormLabel>
+          <FormItem
+            key={input.name}
+            className="flex flex-col justify-center align-center w-full"
+          >
+            <FormLabel
+              className={`font-bold text-xl ${
+                form.formState.errors[input.name as keyof TAirResistance]
+                  ? "text-error"
+                  : "text-label"
+              }`}
+              htmlFor={input.name}
+            >
+              {input.label}
+            </FormLabel>
+            <div className="flex space-x-4 w-full">
+              <FormField
+                control={form.control}
+                name={input.name as keyof TAirResistance}
+                render={({ field }) => (
                   <FormControl>
                     <Input
                       {...field}
                       className="w-28 text-right"
                       type="number"
-                      step="any"
+                      step={0.01}
                       id={input.name}
                       name={input.name}
+                      onChange={(e) => {
+                        field.onChange(Number(e.target.value));
+                      }}
                       value={typeof field.value === "number" ? field.value : 0}
                     />
                   </FormControl>
-                  <FormMessage>
-                    {form.formState.errors.height?.message}
-                  </FormMessage>
-                </FormItem>
-              )}
-            />
-            {input.unitName && input.unitOptions && (
-              <FormField
-                control={form.control}
-                name={input.unitName as keyof TAirResistance}
-                render={(field) => (
-                  <FormItem className="flex items-end">
+                )}
+              />
+              {input.unitName && input.unitOptions && (
+                <FormField
+                  control={form.control}
+                  name={input.unitName as keyof TAirResistance}
+                  render={({ field }) => (
                     <FormControl>
                       <Controller
                         control={form.control}
@@ -114,11 +119,19 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
                         )}
                       />
                     </FormControl>
-                  </FormItem>
-                )}
-              />
-            )}
-          </div>
+                  )}
+                />
+              )}
+            </div>
+
+            {/* Error Message */}
+            <FormMessage className="text-red-600 dark:text-red-400 max-w-[240px] text-center">
+              {
+                form.formState.errors[input.name as keyof TAirResistance]
+                  ?.message
+              }
+            </FormMessage>
+          </FormItem>
         ))}
         <Button variant="default" type="submit">
           Submit
