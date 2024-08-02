@@ -10,7 +10,7 @@ export type GraphProps = {
 
 // Schemas
 export const freeFallSchema = z.object({
-    height: z.coerce.number().min(1, {
+    height: z.coerce.number().positive({
      message: "Height must be greater than 0."
   }),
     height_unit: z.enum(["m", "km"]),
@@ -25,19 +25,20 @@ export const freeFallSchema = z.object({
 export type TFreeFall = z.infer<typeof freeFallSchema>;
 
 export const airResistanceSchema = freeFallSchema.extend({
-  mass: z.coerce.number().min(1, {
+  mass: z.coerce.number().positive({
     message: "Mass must be greater than 0."
   }),
   mass_unit: z.enum(["g", "kg"]),
-  drag_coefficient: z.coerce.number().min(0, {
-    message: "Drag coefficient must be greater than or equal to 0."
+
+  drag_coefficient: z.coerce.number().positive({
+    message: "Drag coefficient must be greater than 0."
   }),
-  area: z.coerce.number().min(0, {
-    message: "Area must be greater than or equal to 0."
+  area: z.coerce.number().positive({
+    message: "Area must be greater than to 0."
   }),
   area_unit: z.enum(["cm^2", "m^2"]),
-  density: z.coerce.number().min(0, {
-    message: "Density must be greater than or equal to 0."
+  density: z.coerce.number().positive({
+    message: "Density must be greater than 0."
   }),
   density_unit: z.enum(["kg/m^3", "g/cm^3"]),
 });
