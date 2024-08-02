@@ -1391,13 +1391,13 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "resend"
-version = "2.2.0"
+version = "2.3.0"
 description = "Resend Python SDK"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "resend-2.2.0-py2.py3-none-any.whl", hash = "sha256:be420762885de25c816497f09207da1cd54d253c44d9f81f441367893a42d099"},
-    {file = "resend-2.2.0.tar.gz", hash = "sha256:f44976e4a37bb66445280bd8ef201eaac536b07bbe7c4da8f1717f4fcc63da7e"},
+    {file = "resend-2.3.0-py2.py3-none-any.whl", hash = "sha256:438f01c6796a004c2a733350653714e298450ed59b1e07892dbb91f182f370c3"},
+    {file = "resend-2.3.0.tar.gz", hash = "sha256:4cf68c1091f796bc06a33919f7441fe13f81f4cb6b4fa5f6bdd193f6d0a8a743"},
 ]
 
 [package.dependencies]
@@ -1612,4 +1612,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "81eecce54e1fe9eae9ea802b8c4e0c020dfa869f7585e8edf120537a24c6b9bc"
+content-hash = "b38acbe0456a717ca482586ecba37e471ac58d7bf43a67a7e838c7e039e08b37"
