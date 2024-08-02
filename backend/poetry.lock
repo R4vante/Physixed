@@ -989,7 +989,7 @@ name = "pint"
 version = "0.24.3"
 description = "Physical quantities module"
 optional = false
-python-versions = ">=3.10"
+python-versions = ">=3.9"
 files = [
     {file = "Pint-0.24.3-py3-none-any.whl", hash = "sha256:d98667e46fd03a1b94694fbfa104ec30858684d8ab26952e2a348b48059089bb"},
     {file = "pint-0.24.3.tar.gz", hash = "sha256:d54771093e8b94c4e0a35ac638c2444ddf3ef685652bab7675ffecfa0c5c5cdf"},
@@ -1612,4 +1612,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6a301b6fee0f1b53d40e6a4ba5edc2fee43e24e081a4ee63f336be64a1f684be"
+content-hash = "03c5c9c475fba91aa57ae79f9ab1ff9ad34359ccd75dd97f3dd693e46bbd9ebe"
