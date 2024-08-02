@@ -34,7 +34,7 @@ export const airResistanceSchema = freeFallSchema.extend({
     message: "Drag coefficient must be greater than 0."
   }),
   area: z.coerce.number().positive({
-    message: "Area must be greater than to 0."
+    message: "Area must be greater than 0."
   }),
   area_unit: z.enum(["cm^2", "m^2"]),
   density: z.coerce.number().positive({

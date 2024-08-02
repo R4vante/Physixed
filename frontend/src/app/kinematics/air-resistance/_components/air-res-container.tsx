@@ -28,7 +28,6 @@ const AirResContainer = () => {
 
     setHeightData(JSON.parse(result.height_dict));
     setVelocityData(JSON.parse(result.velocity_dict));
-    console.log(velocityData);
   };
 
   return (

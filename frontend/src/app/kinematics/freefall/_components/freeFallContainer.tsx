@@ -14,7 +14,6 @@ const FreeFallContainer = () => {
   const [isVelocity, setIsVelocity] = useState(false);
 
   const handleFormSubmit = async (data: TFreeFall) => {
-    console.log(data);
     try {
       const response = await fetch(`${baseUrl}/kinematics/freefall/`, {
         method: "POST",
