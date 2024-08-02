@@ -1,8 +1,32 @@
+"use client";
+
 import AirResForm from "@/app/kinematics/air-resistance/_components/air-res-form";
 import CardWrapper from "@/components/ui/cardWrapper";
-import React from "react";
+import { GraphProps, TAirResistance } from "@/lib/types";
+import React, { useState } from "react";
+import { fetchData } from "@/lib/helpers";
 
 const AirResContainer = () => {
+  const baseURL = process.env.NEXT_PUBLIC_DJANGO_API_URL;
+  const [heightData, setHeightData] = useState<GraphProps | null>(null);
+  const [velocityData, setVelocityData] = useState<GraphProps | null>(null);
+  const handleFormSubmit = async (data: TAirResistance) => {
+    const result = await fetchData(
+      data,
+      `${baseURL}/kinematics/air-resistance/`
+    );
+
+    if (!result.height_dict) {
+      throw new Error("Could not receive height data from server.");
+    } else if (!result.velocity_dict) {
+      throw new Error("Could not receive velocity data from server.");
+    }
+
+    setHeightData(JSON.parse(result.height_dict));
+    setVelocityData(JSON.parse(result.velocity_dict));
+    console.log(velocityData);
+  };
+
   return (
     <div className="flex flex-col h-full items-center justify-between md:justify-between lg:flex-row lg:justify-between lg:h-full lg:w-3/4 lg:gap-x-10">
       <CardWrapper
@@ -10,7 +34,7 @@ const AirResContainer = () => {
         title="Fall with Air Resistance"
         label="Fill in the parameters here!"
       >
-        <AirResForm />
+        <AirResForm onSubmit={handleFormSubmit} />
       </CardWrapper>
     </div>
   );

@@ -1,6 +1,15 @@
 "use client";
 
 import {
+  TAirResistance,
+  TFreeFall,
+  airResistanceSchema,
+  freeFallSchema,
+} from "@/lib/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import {
   Form,
   FormControl,
   FormField,
@@ -9,19 +18,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { airResistanceSchema, TAirResistance } from "@/lib/types";
-import { Controller, useForm, FieldErrors } from "react-hook-form";
-import { inputParameters } from "@/lib/data";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-
+import { inputParameters } from "@/lib/data";
 const AirResForm = ({ onSubmit }: AirResFormProps) => {
   const form = useForm<TAirResistance>({
     resolver: zodResolver(airResistanceSchema),
@@ -35,56 +40,52 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
       drag_coefficient: 0.47,
       area: 1,
       area_unit: "m^2",
+      density: 1.225,
+      density_unit: "kg/m^3",
+
+      velocity_toggle: false,
     },
   });
 
   return (
     <Form {...form}>
       <form
-        className="flex flex-col space-y-6"
         onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col space-y-6"
       >
         {inputParameters.map((input) => (
-          <div
-            key={input.name}
-            className="flex space-x-4 justify-between w-full"
-          >
+          <div className="flex space-x-4" key={input.name}>
             <FormField
-              name={input.name}
+              control={form.control}
+              name={input.name as keyof TAirResistance}
               render={({ field }) => (
                 <FormItem>
-                  <div>
-                    <FormLabel
-                      className="font-bold text-xl"
-                      htmlFor={input.name}
-                    >
-                      {input.label}
-                    </FormLabel>
-                  </div>
+                  <FormLabel className="font-bold text-xl" htmlFor="height">
+                    {input.label}
+                  </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      id={input.name}
+                      className="w-28 text-right"
                       type="number"
                       step="any"
-                      className="w-28 text-right"
+                      id={input.name}
+                      name={input.name}
+                      value={typeof field.value === "number" ? field.value : 0}
                     />
                   </FormControl>
                   <FormMessage>
-                    {
-                      form.formState.errors[
-                        input.name as keyof FieldErrors<TAirResistance>
-                      ]?.message
-                    }
+                    {form.formState.errors.height?.message}
                   </FormMessage>
                 </FormItem>
               )}
             />
             {input.unitName && input.unitOptions && (
               <FormField
-                name={input.unitName}
-                render={({ field }) => (
-                  <FormItem className="flex items-end ">
+                control={form.control}
+                name={input.unitName as keyof TAirResistance}
+                render={(field) => (
+                  <FormItem className="flex items-end">
                     <FormControl>
                       <Controller
                         control={form.control}
@@ -93,6 +94,7 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
                           <Select
                             value={field.value as string}
                             onValueChange={field.onChange}
+                            name={input.unitName}
                           >
                             <SelectTrigger className="w-28">
                               <SelectValue>

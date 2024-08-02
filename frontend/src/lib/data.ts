@@ -41,5 +41,12 @@ export const inputParameters = [
         label: "Area",
         unitName: "area_unit",
         unitOptions: ["m^2"]
+    },
+
+    {
+        name: "density",
+        label: "Density",
+        unitName: "density_unit",
+        unitOptions: ["(kg/m^3)"]
     }
 ]
