@@ -1,6 +1,6 @@
 {
   "branches": ["main"],
-  "repositoryUrl": "https://github.com/R4vante/Physixed",
+  "repositoryUrl": "https://github.com/R4vante/Physixed.git",
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
