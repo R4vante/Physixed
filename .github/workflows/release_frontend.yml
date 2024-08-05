@@ -1,0 +1,43 @@
+name: Frontend release CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Cache node_modules
+      uses: actions/cache@v4
+      with:
+        path: frontend/node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('frontend/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-modules-
+
+    - name: Install dependencies
+      run: |
+        cd frontend
+        npm install
+
+    - name: install semantic-release
+      run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/exec @semantic-release/release-notes-generator
+
+    - name: semantic-release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      run: |
+        cd frontend
+        npx semantic-release
