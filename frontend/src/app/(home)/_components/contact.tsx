@@ -1,4 +1,4 @@
-import ContactButton from "@/app/(home)/_components/contactButton";
+import ContactButton from "@/app/(home)/_components/contact-button";
 import ContactForm from "@/app/(home)/_components/contact-form";
 import CardWrapper from "@/components/ui/card-wrapper";
 
