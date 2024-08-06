@@ -1,4 +1,6 @@
-export const links = [
+import { InputParams, IRoute } from "@/lib/types"
+
+export const links: IRoute[] = [
     {
         name: "Home",
         path: "/",
@@ -9,7 +11,7 @@ export const links = [
     }
 ]
 
-export const inputParameters = [
+export const inputParameters: InputParams[] = [
     {
         name: "height",
         label: "Initial Height",
