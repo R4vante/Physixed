@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@/components/layout/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
-import NavLinks from "@/components/layout/navLinks";
+import NavLinks from "@/components/layout/nav-links";
 import NavMenu from "@/components/layout/nav-menu";
 
 const Header = ({ className, ...props }: HeaderProps) => {

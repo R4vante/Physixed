@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import AirResForm from "@/app/kinematics/air-resistance/_components/air-res-form";
-import CardWrapper from "@/components/ui/cardWrapper";
+import CardWrapper from "@/components/ui/card-wrapper";
 import { GraphProps, TAirResistance } from "@/lib/types";
 import { fetchData } from "@/lib/helpers";
 import PlotContainer from "@/app/kinematics/_components/plot-container";
