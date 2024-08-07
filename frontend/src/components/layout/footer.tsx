@@ -12,9 +12,6 @@ const Footer = ({ className, ...props }: FooterProps) => {
       )}
     >
       <p>&copy; Physixed 2024</p>
-      <div>
-        <ThemeToggle />
-      </div>
     </footer>
   );
 };
