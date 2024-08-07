@@ -9,6 +9,7 @@ export type IRoute = {
   name: string;
   path: string;
   params?: Array<Params>;
+  subRoutes?: Array<IRoute>;
 }
 
 // Type for additional parameters in routes (e.g. /:id)
