@@ -20,7 +20,7 @@ const Header = ({ className, ...props }: HeaderProps) => {
     <>
       <header
         className={twMerge(
-          "mb-4 fixed px-4 top-0 z-[20] w-full flex bg-background/10 backdrop-blur-[0.5rem] flex-wrap items-center md:px-10 lg:px-15",
+          "mb-4 fixed px-4 top-0 z-[20] w-full flex bg-background/10 backdrop-blur-[0.5rem] flex-wrap items-center justify-between md:px-10 lg:px-15",
           className
         )}
         {...props}
