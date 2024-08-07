@@ -5,8 +5,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@/components/layout/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
-import NavLinks from "@/components/layout/nav-links";
+
 import NavMenu from "@/components/layout/nav-menu";
+import NavLinks from "@/components/layout/nav-links";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,20 +21,24 @@ const Header = ({ className, ...props }: HeaderProps) => {
     <>
       <header
         className={twMerge(
-          "mb-4 fixed px-4 top-0 z-[20] w-full flex bg-background/10 backdrop-blur-[0.5rem] flex-wrap items-center md:px-10 lg:px-15",
+          "mb-4 fixed px-4 top-0 z-[20] w-full flex bg-background/10 backdrop-blur-[0.5rem] flex-wrap items-center justify-between md:px-10 lg:px-15",
           className
         )}
         {...props}
       >
         <Logo />
-        <nav className="flex pl-16">
-          <div className="hidden md:flex w-full justify-between">
+        <nav className="flex flex-1 md:pl-16 justify-end md:justify-between">
+          <div className="hidden md:flex flex-1 md:w-full md:align-center">
             <NavMenu />
           </div>
+
           <div>
             <button className="md:hidden" onClick={toggleNavBar}>
               {isOpen ? <CloseIcon /> : <MenuIcon />}
             </button>
+          </div>
+          <div className="hidden md:flex">
+            <ThemeToggle />
           </div>
         </nav>
 

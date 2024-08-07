@@ -7,8 +7,18 @@ export const links: IRoute[] = [
     },
     {
         name: "Kinematics",
-        path: "/kinematics"
-    }
+        path: "/kinematics",
+        subRoutes: [
+            {
+                name: "Free Fall Motion",
+                path: "/kinematics/free-fall"
+            },
+            {
+                name: "Free Fall with Air Resistance",
+                path: "/kinematics/air-resistance"
+            },
+        ]
+    },
 ]
 
 export const inputParameters: InputParams[] = [
