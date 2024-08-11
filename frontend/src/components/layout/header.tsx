@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Logo from "@/components/layout/logo";
+import { Icons } from "@/components/icons/icons";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
 import NavMenu from "@/components/layout/nav-menu";
@@ -25,7 +25,7 @@ const Header = ({ className, ...props }: HeaderProps) => {
         )}
         {...props}
       >
-        <Logo />
+        <Icons.logo />
         <nav className="flex flex-1 md:pl-16 justify-end md:justify-between">
           <div className="hidden md:flex flex-1 md:w-full md:align-center">
             <NavMenu />
@@ -37,6 +37,7 @@ const Header = ({ className, ...props }: HeaderProps) => {
             </button>
           </div>
           <div className="hidden md:flex">
+
             <ThemeToggle />
           </div>
         </nav>
