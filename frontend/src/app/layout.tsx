@@ -39,7 +39,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
           <Header />
-          <main className="z-main-content flex-1 flex flex-col sm:flex-row sm:justify-center">
+          <main className="z-main-content flex-1 flex flex-row sm:justify-center">
             {children}
           </main>
           <Footer />

@@ -21,17 +21,17 @@ const NavMenu = () => {
         <NavigationMenuList className="gap-x-3 bg-transparent">
           {links.map((link) =>
             link.subRoutes ? (
-              <NavigationMenuItem key={link.path}>
+              <NavigationMenuItem key={link.href}>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-accent/50">
-                  <NavigationMenuLink href={link.path}>
-                    {link.name}
+                  <NavigationMenuLink href={link.href}>
+                    {link.title}
                   </NavigationMenuLink>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="flex bg-background">
                   <ul className="flex flex-col w-[600px]">
                     {link.subRoutes?.map((subRoute) => (
-                      <NavLinks key={subRoute.path} href={subRoute.path}>
-                        {subRoute.name}
+                      <NavLinks key={subRoute.href} href={subRoute.href}>
+                        {subRoute.title}
                       </NavLinks>
                     ))}
                   </ul>
@@ -41,10 +41,10 @@ const NavMenu = () => {
             ) : (
               <NavigationMenuItem
                 className={`${navigationMenuTriggerStyle()} bg-transparent hover:bg-accent/50`}
-                key={link.path}
+                key={link.href}
               >
-                <NavigationMenuLink href={link.path}>
-                  {link.name}
+                <NavigationMenuLink href={link.href}>
+                  {link.title}
                 </NavigationMenuLink>
               </NavigationMenuItem>
             )

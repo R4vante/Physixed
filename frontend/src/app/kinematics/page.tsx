@@ -1,11 +1,12 @@
-import Link from "next/link";
-import React from "react";
+import Heading from "@/app/kinematics/_components/ui/heading";
+import AppLinks from "@/app/kinematics/_components/ui/app-links";
 
 const KinematicsHome = () => {
   return (
-    <Link className="py-20" href="/kinematics/freefall">
-      Free fall
-    </Link>
+    <section className="">
+      <Heading />
+      <AppLinks />
+    </section>
   );
 };
 
