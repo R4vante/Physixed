@@ -1,6 +1,6 @@
-import FreeFallPlot from "@/app/kinematics/free-fall/_components/free-fall-plot";
+import FreeFallPlot from "@/app/kinematics/freefall/_components/freeFallPlot";
 import { Button } from "@/components/ui/button";
-import CardWrapper from "@/components/ui/card-wrapper";
+import CardWrapper from "@/components/ui/cardWrapper";
 import { GraphProps } from "@/lib/types";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 

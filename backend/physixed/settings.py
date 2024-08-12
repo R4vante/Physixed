@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import os
 import pathlib
+from collections.abc import Sequence
 from pathlib import Path
 
 from dotenv import dotenv_values, load_dotenv
@@ -158,6 +159,32 @@ STATIC_ROOT = BASE_DIR / STATIC_URL.strip("/")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # LOGGING
+
+LOG_FILENAME = BASE_DIR / "logs" / "django_logfile.log"
+if not LOG_FILENAME.parent.exists():
+    LOG_FILENAME.parent.mkdir()
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": ("%(levelname)s :: %(module)s:%(funcName)s:%(lineno)s :: %(asctime)s :: %(message)s"),
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            # "when": "W0",  # leaved the TimedRotatingFileHandler out for now. Not working.
+            "filename": LOG_FILENAME,
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {"DEFINED BELOW": None},
+}
+
 try:
     from .px_production_apps import baseline_apps, production_apps
 except ImportError as e:
@@ -177,79 +204,44 @@ except ImportError:
     print(msg)  # noqa: T201
     development_apps = production_apps.copy()
 
-LOG_DIR = BASE_DIR / "logs"
-if not LOG_DIR.exists():
-    LOG_DIR.mkdir()
-
-FORMATTERS = {
-    "verbose": {
-        "()": "colorlog.ColoredFormatter",
-        "format": "%(log_color)s [%(levelname)s] %(asctime)s %(name)s %(threadName)s %(thread)d %(module)s %(filename)s:%(lineno)d %(funcName)s %(process)d :: %(message)s",  # noqa: E501
-    },
-    "simple": {
-        "()": "colorlog.ColoredFormatter",
-        "format": "%(log_color)s [%(levelname)s] %(asctime)s %(name)s %(module)s %(filename)s:%(lineno)d %(funcName)s :: %(message)s",  # noqa: E501
-    },
+logger: dict[str, dict] = {}
+default_log_style = {
+    "handlers": [
+        "file",
+    ],
+    "level": "DEBUG",
 }
 
 
-HANDLERS = {
-    "console_handler": {"class": "logging.StreamHandler", "formatter": "simple", "level": "DEBUG"},
-    "info_handler": {
-        "class": "logging.handlers.RotatingFileHandler",
-        "filename": Path(LOG_DIR) / "physixed_info.log",
-        "mode": "a",
-        "encoding": "utf-8",
-        "formatter": "simple",
-        "level": "INFO",
-        "backupCount": 5,
-        "maxBytes": 1024 * 1024 * 50,  # 50 MB
-    },
-    "error_handler": {
-        "class": "logging.handlers.RotatingFileHandler",
-        "filename": Path(LOG_DIR) / "physixed_error.log",
-        "mode": "a",
-        "formatter": "verbose",
-        "level": "WARNING",
-        "backupCount": 5,
-        "maxBytes": 1024 * 1024 * 50,  # 50 MB
-    },
-}
+def update_applist_logging(
+    app_directory: str,
+    logfiles: Sequence[str],
+    installed_apps: list,
+    logger: dict,
+) -> None:
+    """Update the installed apps and the logger with the app_directory and logfiles."""
+    if app_directory not in installed_apps:
+        installed_apps.append(app_directory)
 
-LOGGERS = {
-    "django": {
-        "handlers": ["console_handler", "info_handler"],
-        "level": "INFO",
-    },
-    "django.request": {
-        "handlers": ["error_handler"],
-        "level": "INFO",
-        "propagate": True,
-    },
-    "django.template": {
-        "handlers": ["error_handler"],
-        "level": "DEBUG",
-        "propagate": True,
-    },
-    "django.server": {
-        "handlers": ["error_handler"],
-        "level": "INFO",
-        "propagate": True,
-    },
-}
+    # This handles all regular cases, and the special case for "basic.apps.BasicCommonConfig"
+    directory_base = app_directory.split(".")[0]
+    for subfile in logfiles:
+        logger[f"{directory_base}.{subfile}"] = default_log_style
 
-for apps in [baseline_apps, production_apps, development_apps]:
-    for app in apps:
-        LOGGERS[app] = {
-            "handlers": ["console_handler", "info_handler", "error_handler"],
-            "level": "DEBUG",
-            "propagate": True,
-        }
 
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": FORMATTERS,
-    "handlers": HANDLERS,
-    "loggers": LOGGERS,
-}
+# Uncomment later: for handling email when errors occur
+# 'django.request': {'handlers': ['file', 'mail_admins'],'level': 'DEBUG','propagate': True, },
+for app_directory, appdict in baseline_apps.items():
+    update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
+
+if bool(DEBUG):
+    # We are on development/debug mode
+    for app_directory, appdict in development_apps.items():
+        update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
+else:
+    # We are on production!
+    for app_directory, appdict in production_apps.items():
+        update_applist_logging(app_directory, appdict.get("log_files", []), INSTALLED_APPS, logger)
+
+# Finally, store the list of loggers.
+LOGGING["loggers"] = logger
