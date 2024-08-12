@@ -118,6 +118,9 @@ pint = "^0.24"
 resend = "^2.3.0"
 setuptools = "^72.1.0"
 
+[tool.poetry.group.dev.dependencies]
+colorlog = "^6.8.2"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

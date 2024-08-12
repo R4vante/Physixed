@@ -183,12 +183,12 @@ if not LOG_DIR.exists():
 
 FORMATTERS = {
     "verbose": {
-        "format": "[{levelname}] {asctime:s} {name} {threadName} {thread:d} {module} {filename}:{lineno:d} {name} {funcName} {process:d} :: {message}",  # noqa: E501
-        "style": "{",
+        "()": "colorlog.ColoredFormatter",
+        "format": "%(log_color)s [%(levelname)s] %(asctime)s %(name)s %(threadName)s %(thread)d %(module)s %(filename)s:%(lineno)d %(funcName)s %(process)d :: %(message)s",  # noqa: E501
     },
     "simple": {
-        "format": "[{levelname}] {asctime:s} {name} {module} {filename}:{lineno:d} {funcName} :: {message}",
-        "style": "{",
+        "()": "colorlog.ColoredFormatter",
+        "format": "%(log_color)s [%(levelname)s] %(asctime)s %(name)s %(module)s %(filename)s:%(lineno)d %(funcName)s :: %(message)s",  # noqa: E501
     },
 }
 
@@ -197,22 +197,22 @@ HANDLERS = {
     "console_handler": {"class": "logging.StreamHandler", "formatter": "simple", "level": "DEBUG"},
     "info_handler": {
         "class": "logging.handlers.RotatingFileHandler",
-        "filename": f"{LOG_DIR}/physixed_info.log",
+        "filename": Path(LOG_DIR) / "physixed_info.log",
         "mode": "a",
         "encoding": "utf-8",
         "formatter": "simple",
         "level": "INFO",
         "backupCount": 5,
-        "maxBytes": 1024 * 1024 * 5,  # 5 MB
+        "maxBytes": 1024 * 1024 * 50,  # 50 MB
     },
     "error_handler": {
         "class": "logging.handlers.RotatingFileHandler",
-        "filename": f"{LOG_DIR}/physixed_error.log",
+        "filename": Path(LOG_DIR) / "physixed_error.log",
         "mode": "a",
         "formatter": "verbose",
         "level": "WARNING",
         "backupCount": 5,
-        "maxBytes": 1024 * 1024 * 5,  # 5 MB
+        "maxBytes": 1024 * 1024 * 50,  # 50 MB
     },
 }
 
