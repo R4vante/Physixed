@@ -183,11 +183,11 @@ if not LOG_DIR.exists():
 
 FORMATTERS = {
     "verbose": {
-        "format": "{levelname} {asctime:s} {name} {threadName} {thread:d} {module} {filename} {lineno:d} {name} {funcName} {process:d} {message}",  # noqa: E501
+        "format": "[{levelname}] {asctime:s} {name} {threadName} {thread:d} {module} {filename}:{lineno:d} {name} {funcName} {process:d} :: {message}",  # noqa: E501
         "style": "{",
     },
     "simple": {
-        "format": "{levelname} {asctime:s} {name} {module} {filename} {lineno:d} {funcName} {message}",
+        "format": "[{levelname}] {asctime:s} {name} {module} {filename}:{lineno:d} {funcName} :: {message}",
         "style": "{",
     },
 }
@@ -200,7 +200,7 @@ HANDLERS = {
         "filename": f"{LOG_DIR}/physixed_info.log",
         "mode": "a",
         "encoding": "utf-8",
-        "formatter": "verbose",
+        "formatter": "simple",
         "level": "INFO",
         "backupCount": 5,
         "maxBytes": 1024 * 1024 * 5,  # 5 MB
@@ -235,11 +235,6 @@ LOGGERS = {
         "handlers": ["error_handler"],
         "level": "INFO",
         "propagate": True,
-    },
-    "": {
-        "handlers": ["console_handler"],
-        "level": "DEBUG",
-        "propagte": True,
     },
 }
 
