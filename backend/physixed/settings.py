@@ -183,12 +183,12 @@ if not LOG_DIR.exists():
 
 FORMATTERS = {
     "verbose": {
-        "format": "[{levelname}] {asctime:s} {name} {threadName} {thread:d} {module} {filename}:{lineno:d} {name} {funcName} {process:d} :: {message}",  # noqa: E501
-        "style": "{",
+        "()": "colorlog.ColoredFormatter",
+        "format": "%(log_color)s [%(levelname)s] %(asctime)s %(name)s %(threadName)s %(thread)d %(module)s %(filename)s:%(lineno)d %(funcName)s %(process)d :: %(message)s",  # noqa: E501
     },
     "simple": {
-        "format": "[{levelname}] {asctime:s} {name} {module} {filename}:{lineno:d} {funcName} :: {message}",
-        "style": "{",
+        "()": "colorlog.ColoredFormatter",
+        "format": "%(log_color)s [%(levelname)s] %(asctime)s %(name)s %(module)s %(filename)s:%(lineno)d %(funcName)s :: %(message)s",  # noqa: E501
     },
 }
 
