@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { ThemeToggle } from "@/components/layout/themeToggle";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -12,6 +12,9 @@ const Footer = ({ className, ...props }: FooterProps) => {
       )}
     >
       <p>&copy; Physixed 2024</p>
+      <div>
+        <ThemeToggle />
+      </div>
     </footer>
   );
 };

@@ -102,10 +102,14 @@ const AirResForm = ({ onSubmit }: AirResFormProps) => {
                             name={input.unitName}
                           >
                             <SelectTrigger className="w-28">
-                              <SelectValue>{field.value}</SelectValue>
+                              <SelectValue>
+                                {field.value
+                                  ? field.value
+                                  : input.unitOptions[0]}
+                              </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                              {input.unitOptions?.map((option) => (
+                              {input.unitOptions.map((option) => (
                                 <SelectItem key={option} value={option}>
                                   {option}
                                 </SelectItem>
