@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/R4vante/Physixed/compare/v1.0.0...v1.1.0) (2024-08-12)
+
+
+### Features
+
+* :lipstick: Update header to include theme toggle and navigation menu ([1a92524](https://github.com/R4vante/Physixed/commit/1a92524f8bd442b4cd274e9931d1a3d7f7abf644))
+* :lipstick: Update header to include theme toggle and navigation menu ([69b8d9b](https://github.com/R4vante/Physixed/commit/69b8d9b81ec2a2f174728d00817f19406240cd76))
+
 # 1.0.0 (2024-08-05)
 
 
