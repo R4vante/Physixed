@@ -37,7 +37,6 @@ const Header = ({ className, ...props }: HeaderProps) => {
             </button>
           </div>
           <div className="hidden md:flex">
-
             <ThemeToggle />
           </div>
         </nav>
@@ -46,13 +45,13 @@ const Header = ({ className, ...props }: HeaderProps) => {
           <div className="overflow-y-hidden flex flex-col items-center basis-full h-[90vh] justify-center">
             <ul className="h-full w-full text-center pt-12">
               {links.map((link) => (
-                <li className="text-xl py-6" key={link.path}>
+                <li className="text-xl py-6" key={link.href}>
                   <NavLinks
                     onClick={toggleNavBar}
-                    key={link.path}
-                    href={link.path}
+                    key={link.href}
+                    href={link.href}
                   >
-                    {link.name}
+                    {link.title}
                   </NavLinks>
                 </li>
               ))}
