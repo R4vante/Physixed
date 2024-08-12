@@ -4,7 +4,7 @@ import React from "react";
 
 const Benefits = () => {
   return (
-    <section className=" bg-[#f7f5fe] dark:bg-[#1f2023] py-12 lg:py-24 flex flex-col items-center gap-y-32 lg:flex-row lg:justify-around">
+    <section className="bg-popover/30 py-12 lg:py-24 flex flex-col items-center gap-y-32 lg:flex-row lg:justify-around">
       <div className="flex items-center justify-between">
         <BenefitCards
           logo={<TimelineIcon className="size-32 text-primary" />}

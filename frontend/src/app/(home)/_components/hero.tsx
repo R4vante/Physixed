@@ -1,5 +1,5 @@
 import "../index.css";
-import HeroImage from "@/app/(home)/_components/heroImage";
+import HeroImage from "@/app/(home)/_components/hero-image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
