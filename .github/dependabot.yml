@@ -10,13 +10,13 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      pip:
-        applies-to: all
+      python:
+        applies-to: "version-updates"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/frontend" # Location of package manifests
     schedule:
       interval: "weekly"
     groups:
-      npm:
-        applies-to: all
+      node:
+        applies-to: "version-updates"
