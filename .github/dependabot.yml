@@ -9,12 +9,26 @@ updates:
     directory: "/backend" # Location of package manifests
     schedule:
       interval: "weekly"
+    groups:
+      applies-to: "security-updates"
 
-    target-branch: "develop"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/frontend" # Location of package manifests
     schedule:
       interval: "weekly"
 
-    target-branch: "develop"
+    groups:
+      applies-to: "security-updates"
+
+  - package-ecosystem: "pip"
+      directory: "/backend" # Location of package manifests
+      schedule:
+        interval: "weekly"
+      target-branch: "develop"
+
+  - package-ecosystem: "npm" # See documentation for possible values
+      directory: "/frontend" # Location of package manifests
+      schedule:
+        interval: "weekly"
+      target-branch: "develop"
