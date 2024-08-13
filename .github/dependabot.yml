@@ -12,7 +12,6 @@ updates:
     groups:
       pip:
         applies-to: all
-    target-branch: "develop"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/frontend" # Location of package manifests
@@ -21,5 +20,3 @@ updates:
     groups:
       npm:
         applies-to: all
-
-    target-branch: "develop"
