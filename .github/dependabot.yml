@@ -11,6 +11,10 @@ updates:
       interval: "weekly"
 
     target-branch: "develop"
+    groups:
+      python:
+        applies-to: "version-updates"
+        dependency-type: "production"
 
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/frontend" # Location of package manifests
@@ -18,3 +22,7 @@ updates:
       interval: "weekly"
 
     target-branch: "develop"
+    groups:
+      node:
+        applies-to: "version-updates"
+        dependency-type: "production"
