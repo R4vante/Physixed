@@ -3,7 +3,7 @@ import FreeFallForm from "@/app/kinematics/freefall/_components/freeFallForm";
 import { GraphProps, TFreeFall } from "@/lib/types";
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import CardWrapper from "@/components/ui/cardWrapper";
+import CardWrapper from "@/components/ui/card-wrapper";
 import toast from "react-hot-toast";
 import Plot from "@/app/kinematics/freefall/_components/plot";
 

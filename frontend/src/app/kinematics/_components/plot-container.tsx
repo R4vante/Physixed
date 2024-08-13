@@ -1,6 +1,6 @@
 import LinePlot from "@/app/kinematics/_components/line-plot";
 import { Button } from "@/components/ui/button";
-import CardWrapper from "@/components/ui/cardWrapper";
+import CardWrapper from "@/components/ui/card-wrapper";
 import { GraphProps } from "@/lib/types";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
