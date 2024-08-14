@@ -1,67 +1,37 @@
 "use client";
-import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import Logo from "@/components/layout/logo";
-import { twMerge } from "tailwind-merge";
-import { links } from "@/lib/data";
-import NavLinks from "@/components/layout/nav-links";
+import React from "react";
+import MainNav from "@/components/layout/main-nav";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import MobileNav from "@/components/layout/mobile-nav";
 
 const Header = ({ className, ...props }: HeaderProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleNavBar = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <>
       <header
-        className={twMerge(
-          "mb-4 fixed px-4 top-0 z-[20] w-full flex bg-background/10 backdrop-blur-[0.5rem] flex-wrap items-center justify-between md:px-10 lg:px-15",
+        className={cn(
+          "z-10 fixed top-0 w-full bg-background/10 backdrop-blur supports-[backdrop-filter]:bg-background/60",
           className
         )}
-        {...props}
       >
-        <Logo />
-        <nav className="flex justify-end">
-          <div className="hidden md:flex w-full justify-between">
-            <ul className="flex justify-center gap-y-1 sm:gap-5">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <NavLinks href={link.href}>{link.title}</NavLinks>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <button className="md:hidden" onClick={toggleNavBar}>
-              {isOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
-          <div className="hidden md:flex">
+        <div className="container flex h-14 max-w-screen-2xl items-center">
+          <MainNav />
+          <div className="flex flex-1 items-center justify-end space-x-2">
             <ThemeToggle />
+            <nav className="flex items-center space-x-2">
+              <div className="hidden sm:inline-block">
+                <Button className="capitalize">Sign up</Button>
+              </div>
+              <div className="hidden sm:inline-block">
+                <Button variant={"ghost"} className="capitalize">
+                  Log in
+                </Button>
+              </div>
+              <MobileNav />
+            </nav>
           </div>
-        </nav>
-
-        {isOpen && (
-          <div className="overflow-y-hidden flex flex-col items-center basis-full h-[90vh] justify-center">
-            <ul className="h-full w-full text-center pt-12">
-              {links.map((link) => (
-                <li className="text-xl py-6" key={link.href}>
-                  <NavLinks
-                    onClick={toggleNavBar}
-                    key={link.href}
-                    href={link.href}
-                  >
-                    {link.title}
-                  </NavLinks>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        </div>
       </header>
     </>
   );

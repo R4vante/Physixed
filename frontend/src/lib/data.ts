@@ -1,4 +1,4 @@
-import { InputParams, IRoute } from "@/lib/types"
+import { IRoute } from "@/lib/types"
 import placeholder from "@/assets/placeholder.jpg"
 
 export const links: IRoute[] = [
@@ -12,13 +12,13 @@ export const links: IRoute[] = [
         subRoutes: [
             {
                 title: "Free Fall Motion",
-                description: "",
+                description: "Experience the free fall motion like never before!",
                 href: "/kinematics/free-fall",
                 image: placeholder,
             },
             {
                 title: "Free Fall with Air Resistance",
-                description: "",
+                description: "Want some air resistance? We got you covered!",
                 href: "/kinematics/air-resistance",
                 image: placeholder,
             },
