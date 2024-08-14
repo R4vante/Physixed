@@ -1,12 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import { links } from "@/lib/data";
-import NavLinks from "@/components/layout/nav-links";
+import React from "react";
 import MainNav from "@/components/layout/main-nav";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import MobileNav from "@/components/layout/mobile-nav";
