@@ -1,7 +1,32 @@
+import { StaticImageData } from "next/image";
 import { Data, Layout } from "plotly.js";
 import { z } from "zod";
 
 // Types
+// ----------------------------------------------
+
+// Type for routes
+export type IRoute = {
+  title: string;
+  href: string;
+  params?: Array<Params>;
+  subRoutes?: Array<ISubRoute>;
+}
+
+export type ISubRoute = {
+  title: string;
+  href: string;
+  description: string;
+  image: StaticImageData;
+}
+
+// Type for additional parameters in routes (e.g. /:id)
+export type Params = {
+  id: string;
+  value: string;
+}
+
+// Typing for graph components
 export type GraphProps = {
     className?: string;
     data: Data[];

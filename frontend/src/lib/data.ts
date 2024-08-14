@@ -1,25 +1,29 @@
-export const links = [
+import { InputParams, IRoute } from "@/lib/types"
+import placeholder from "@/assets/placeholder.jpg"
+
+export const links: IRoute[] = [
     {
-        name: "Home",
-        path: "/",
+        title: "Home",
+        href: "/",
     },
     {
-        name: "Kinematics",
-        path: "/kinematics",
+        title: "Kinematics",
+        href: "/kinematics",
         subRoutes: [
             {
-                name: "Free Fall Motion",
-                path: "/kinematics/free-fall",
-                description: "Experience the free fall motion like never before!"
-                },
+                title: "Free Fall Motion",
+                description: "",
+                href: "/kinematics/free-fall",
+                image: placeholder,
+            },
             {
-                name: "Air Resistance",
-                path: "/kinematics/air-resistance",
-                description: "Want some air resistance? We got you covered!"
-
-            }
-    ],
-    }
+                title: "Free Fall with Air Resistance",
+                description: "",
+                href: "/kinematics/air-resistance",
+                image: placeholder,
+            },
+        ]
+    },
 ]
 
 export const inputParameters = [
