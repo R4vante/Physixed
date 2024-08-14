@@ -1,4 +1,4 @@
-import { InputParams, IRoute } from "@/lib/types"
+import { IRoute } from "@/lib/types"
 import placeholder from "@/assets/placeholder.jpg"
 
 export const links: IRoute[] = [
