@@ -18,9 +18,9 @@ import Link from "next/link";
 
 const navigationLinks = links;
 
-const NavMenu = () => {
+const NavMenu = ({ className }: MenuProps) => {
   return (
-    <NavigationMenu>
+    <NavigationMenu className={cn("hidden sm:inline-block", className)}>
       <NavigationMenuList className="">
         <NavigationMenuItem>
           {navigationLinks
@@ -52,6 +52,10 @@ const NavMenu = () => {
       <NavigationMenuViewport className="bg-card" />
     </NavigationMenu>
   );
+};
+
+type MenuProps = {
+  className?: string;
 };
 
 export default NavMenu;

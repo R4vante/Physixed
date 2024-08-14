@@ -7,7 +7,7 @@ const MainNav = () => {
   return (
     <nav className="flex items-center space-x-4 lg:space-x-6">
       <Link href="/" className="mr-6 flex items-center space-x-2">
-        <Icons.logo />
+        <Icons.logo className="w-12 h-12" />
         <span className="font-bold text-2xl">Physixed</span>
       </Link>
       <NavMenu />

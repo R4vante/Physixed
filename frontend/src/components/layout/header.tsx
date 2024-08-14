@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
+import MobileNav from "@/components/layout/mobile-nav";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   return (
@@ -24,14 +25,15 @@ const Header = ({ className, ...props }: HeaderProps) => {
           <div className="flex flex-1 items-center justify-end space-x-2">
             <ThemeToggle />
             <nav className="flex items-center space-x-2">
-              <div>
+              <div className="hidden sm:inline-block">
                 <Button className="capitalize">Sign up</Button>
               </div>
-              <div>
+              <div className="hidden sm:inline-block">
                 <Button variant={"ghost"} className="capitalize">
                   Log in
                 </Button>
               </div>
+              <MobileNav />
             </nav>
           </div>
         </div>
