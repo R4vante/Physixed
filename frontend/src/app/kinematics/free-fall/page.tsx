@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 
 const FreeFallContainer = dynamic(
-  () => import("@/app/kinematics/freefall/_components/freeFallContainer"),
+  () => import("@/app/kinematics/free-fall/_components/freeFallContainer"),
   { ssr: false }
 );
 
