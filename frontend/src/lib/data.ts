@@ -5,7 +5,20 @@ export const links = [
     },
     {
         name: "Kinematics",
-        path: "/kinematics"
+        path: "/kinematics",
+        subRoutes: [
+            {
+                name: "Free Fall Motion",
+                path: "/kinematics/free-fall",
+                description: "Experience the free fall motion like never before!"
+                },
+            {
+                name: "Air Resistance",
+                path: "/kinematics/air-resistance",
+                description: "Want some air resistance? We got you covered!"
+
+            }
+    ],
     }
 ]
 
