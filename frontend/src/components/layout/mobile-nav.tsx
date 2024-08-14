@@ -28,13 +28,13 @@ const MobileNav = () => {
         </MobileLink>
         <div className="flex flex-col gap-3 mt-3">
           {links.map((link) => (
-            <React.Fragment key={link.name}>
+            <React.Fragment key={link.title}>
               <MobileLink
-                href={link.path}
+                href={link.href}
                 onOpenChange={setOpen}
                 className="capitalize"
               >
-                {link.name}
+                {link.title}
               </MobileLink>
             </React.Fragment>
           ))}

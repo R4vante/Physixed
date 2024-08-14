@@ -26,19 +26,19 @@ const NavMenu = ({ className }: MenuProps) => {
           {navigationLinks
             .filter((link) => link.subRoutes)
             .map((link) => (
-              <React.Fragment key={link.name}>
-                <Link href={link.path}>
+              <React.Fragment key={link.title}>
+                <Link href={link.href}>
                   <NavigationMenuTrigger className="bg-transparent hover:bg-accent/50">
-                    {link.name}
+                    {link.title}
                   </NavigationMenuTrigger>
                 </Link>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                     {link.subRoutes?.map((subLink) => (
                       <ListItem
-                        key={subLink.name}
-                        title={subLink.name}
-                        href={subLink.path}
+                        key={subLink.title}
+                        title={subLink.title}
+                        href={subLink.href}
                       >
                         {subLink.description}
                       </ListItem>
