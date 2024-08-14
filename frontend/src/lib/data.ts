@@ -26,7 +26,7 @@ export const links: IRoute[] = [
     },
 ]
 
-export const inputParameters: InputParams[] = [
+export const inputParameters = [
     {
         name: "height",
         label: "Initial Height",

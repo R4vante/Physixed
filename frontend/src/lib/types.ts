@@ -33,19 +33,7 @@ export type GraphProps = {
     layout: Partial<Layout>;
   };
 
-  // Typing for input units
-export type InputParams = {
-  name: string;
-  label: string;
-  unitName?: string;
-  unitOptions?: string[];
-}
-
-
-// ----------------------------------------------
 // Schemas
-
-// Schema for the free fall form
 export const freeFallSchema = z.object({
     height: z.coerce.number().positive({
      message: "Height must be greater than 0."
@@ -61,8 +49,6 @@ export const freeFallSchema = z.object({
 
 export type TFreeFall = z.infer<typeof freeFallSchema>;
 
-
-// Schema for the air resistance form
 export const airResistanceSchema = freeFallSchema.extend({
   mass: z.coerce.number().positive({
     message: "Mass must be greater than 0."
@@ -84,8 +70,6 @@ export const airResistanceSchema = freeFallSchema.extend({
 
 export type TAirResistance = z.infer<typeof airResistanceSchema>;
 
-
-// Schema for the contact Form
 export const contactSchema = z.object({
   name: z.string({
     message: "First name is required."

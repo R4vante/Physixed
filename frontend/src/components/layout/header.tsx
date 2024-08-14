@@ -2,12 +2,10 @@
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { Icons } from "@/components/icons/icons";
+import Logo from "@/components/layout/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
-import NavMenu from "@/components/layout/nav-menu";
 import NavLinks from "@/components/layout/nav-links";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,12 +23,17 @@ const Header = ({ className, ...props }: HeaderProps) => {
         )}
         {...props}
       >
-        <Icons.logo />
-        <nav className="flex flex-1 md:pl-16 justify-end md:justify-between">
-          <div className="hidden md:flex flex-1 md:w-full md:align-center">
-            <NavMenu />
+        <Logo />
+        <nav className="flex justify-end">
+          <div className="hidden md:flex w-full justify-between">
+            <ul className="flex justify-center gap-y-1 sm:gap-5">
+              {links.map((link) => (
+                <li key={link.path}>
+                  <NavLinks href={link.path}>{link.name}</NavLinks>
+                </li>
+              ))}
+            </ul>
           </div>
-
           <div>
             <button className="md:hidden" onClick={toggleNavBar}>
               {isOpen ? <CloseIcon /> : <MenuIcon />}
