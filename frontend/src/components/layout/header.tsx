@@ -6,6 +6,7 @@ import Logo from "@/components/layout/logo";
 import { twMerge } from "tailwind-merge";
 import { links } from "@/lib/data";
 import NavLinks from "@/components/layout/nav-links";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 const Header = ({ className, ...props }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,8 +29,8 @@ const Header = ({ className, ...props }: HeaderProps) => {
           <div className="hidden md:flex w-full justify-between">
             <ul className="flex justify-center gap-y-1 sm:gap-5">
               {links.map((link) => (
-                <li key={link.path}>
-                  <NavLinks href={link.path}>{link.name}</NavLinks>
+                <li key={link.href}>
+                  <NavLinks href={link.href}>{link.title}</NavLinks>
                 </li>
               ))}
             </ul>
